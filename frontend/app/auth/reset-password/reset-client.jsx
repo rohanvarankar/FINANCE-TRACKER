@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import api from "../../api/api";
+import api from "@/lib/api";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export default function ResetPasswordPage() {
