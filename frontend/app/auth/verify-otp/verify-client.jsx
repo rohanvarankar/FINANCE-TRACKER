@@ -24,7 +24,7 @@ export default function VerifyOtpClient() {
     setLoading(true);
 
     try {
-      const res = await api.post("/auth/verify-otp", {
+      const res = await api.post("/verify-otp", {
         email,
         otp,
         purpose,
