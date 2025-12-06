@@ -56,7 +56,7 @@ export default function Home() {
         <div className="relative animate-float">
           <div className="w-[330px] md:w-[420px] h-[420px] bg-white/40 backdrop-blur-xl border border-white/50 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.08)] overflow-hidden">
             <Image
-              src="/dashboard-preview.png"
+              src="/fianance.png"
               alt="Dashboard Preview"
               fill
               className="object-cover"
