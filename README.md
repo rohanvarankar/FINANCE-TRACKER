@@ -46,9 +46,8 @@ Profile section allows password update & logout
 
 🌐 Live Links
 
-Frontend (Vercel): https://your-frontend-url
+(Vercel): https://personalfianance.vercel.app/
 
-Backend (Render): https://your-backend-url
 
 (Replace with your actual URLs — no keys required.)
 
