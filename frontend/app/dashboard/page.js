@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import api from "@/lib/api";;
+import api from "@/lib/api";
 import { useRouter } from "next/navigation";
 import { getToken } from "../../utils/auth";
 import { mapSort } from "../../utils/sortMapper";
@@ -11,6 +11,7 @@ import Sidebar from "../components/Sidebar";
 import TransactionCard from "../components/TransactionCard";
 import EditTransactionModal from "../components/EditTransactionModal";
 import { motion } from "framer-motion";
+
 
 export default function Dashboard() {
   const router = useRouter();
