@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import api from "../api/api";
+import api from "@/lib/api";
 import { useRouter } from "next/navigation";
 import { getToken } from "../../utils/auth";
 
