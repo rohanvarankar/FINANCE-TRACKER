@@ -27,7 +27,7 @@ export default function SignupPage() {
     setLoading(true);
 
     try {
-      await api.post("/signup", form);
+      await api.post("/auth/signup", form);
 
       router.push(`/auth/verify-otp?email=${form.email}`);
     } catch (err) {

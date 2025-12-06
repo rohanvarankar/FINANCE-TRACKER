@@ -26,7 +26,7 @@ export default function SigninPage() {
     setLoading(true);
 
     try {
-      const res = await api.post("/signin", form);
+      const res = await api.post("/auth/signin", form);
       const token = res.data.accessToken;
 
       localStorage.setItem("accessToken", token);
