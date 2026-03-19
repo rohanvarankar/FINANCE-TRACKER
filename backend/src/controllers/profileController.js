@@ -6,9 +6,11 @@ const sendEmail = require("../utils/sendEmail");
 // -------------------------
 // GET PROFILE
 // -------------------------
+// GET PROFILE
+// -------------------------
 exports.getProfile = async (req, res) => {
   try {
-    const user = await User.findById(req.user.userId).select("username email createdAt");
+    const user = await User.findById(req.user.userId).select("username email createdAt avatarUrl");
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -80,3 +82,27 @@ exports.changePassword = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+// -------------------------
+// UPLOAD AVATAR
+// -------------------------
+exports.uploadAvatar = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: "No file uploaded" });
+    }
+
+    const user = await User.findById(req.user.userId);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    // Save relative avatar URL
+    user.avatarUrl = `/uploads/${req.file.filename}`;
+    await user.save();
+
+    res.json({ message: "Avatar uploaded successfully", avatarUrl: user.avatarUrl });
+  } catch (error) {
+    console.error("Upload Avatar Error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+

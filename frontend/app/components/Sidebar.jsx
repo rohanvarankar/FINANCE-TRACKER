@@ -2,104 +2,163 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 import {
-  CurrencyDollarIcon,
-  UserIcon,
-  ArrowRightOnRectangleIcon,
+  HomeIcon,
+  TagIcon,
+  ChartPieIcon,
+  FlagIcon,
+  ChartBarIcon,
+  ArrowPathIcon,
+  UserCircleIcon,
+  RectangleGroupIcon,
+  UserGroupIcon,
   XMarkIcon,
+  ArrowLeftOnRectangleIcon,
+  ShieldCheckIcon
 } from "@heroicons/react/24/outline";
 
 export default function Sidebar({ open, onClose, onLogout }) {
   const pathname = usePathname();
 
-  const items = [
-    { name: "Manage Expense", href: "/dashboard", Icon: CurrencyDollarIcon },
-    { name: "Profile", href: "/profile", Icon: UserIcon },
+  const navItems = [
+    { name: "Dashboard", href: "/dashboard", Icon: HomeIcon },
+    { name: "Categories", href: "/categories", Icon: TagIcon },
+    { name: "Budgets", href: "/budgets", Icon: ChartPieIcon },
+    { name: "Goals", href: "/goals", Icon: FlagIcon },
+    { name: "Reports", href: "/reports", Icon: ChartBarIcon },
+    { name: "Recurring", href: "/recurring", Icon: ArrowPathIcon },
+    { name: "Households", href: "/households", Icon: UserGroupIcon },
+  ];
+
+  const secondaryItems = [
+    { name: "Profile Settings", href: "/profile", Icon: UserCircleIcon },
   ];
 
   return (
     <>
-      {/* BACKDROP OVERLAY (mobile only) */}
-      <div
-        className={`fixed inset-0 bg-black/40 backdrop-blur-sm z-30 md:hidden 
-          transition-opacity duration-300 
-          ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
-        onClick={onClose}
-      />
+      {/* MOBILE BACKDROP */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="fixed inset-0 bg-black/60 backdrop-blur-xl z-[60] md:hidden cursor-pointer"
+          />
+        )}
+      </AnimatePresence>
 
-      {/* SIDEBAR PANEL */}
+      {/* SIDEBAR */}
       <aside
         className={`
-          fixed top-0 left-0 
-          h-screen w-64 bg-white shadow-xl border-r border-slate-200 
-          z-40 transform transition-transform duration-300
+          fixed top-0 left-0 h-full w-72 bg-[#020617]/80 backdrop-blur-3xl z-[70]
+          border-r border-white/5 shadow-2xl transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]
           ${open ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
         `}
       >
-        {/* HEADER WITH CLOSE BUTTON (mobile only) */}
-        <div className="flex items-center justify-between p-4 border-b md:hidden">
-          <h2 className="font-semibold text-slate-800">Menu</h2>
-          <button onClick={onClose} className="p-2 rounded hover:bg-slate-100">
-            <XMarkIcon className="w-6 h-6 text-slate-700" />
-          </button>
-        </div>
-
-        <nav className="flex flex-col gap-2 p-5 overflow-y-auto h-full">
-
-          {/* MENU BUTTONS */}
-          {items.map(({ name, href, Icon }) => {
-            const active = pathname === href;
-
-            return (
-              <Link
-                key={name}
-                href={href}
-                onClick={onClose}   // 🔥 AUTO CLOSE SIDEBAR ON MOBILE
-                className={`
-                  flex items-center gap-3 p-3 rounded-lg transition-all 
-                  ${active
-                    ? "bg-teal-600 text-white shadow-md"
-                    : "hover:bg-teal-50 text-slate-700"
-                  }
-                `}
-              >
-                <Icon
-                  className={`w-5 h-5 ${active ? "text-white" : "text-teal-600"}`}
-                />
-                <span className="text-sm font-medium">{name}</span>
-              </Link>
-            );
-          })}
-
-          {/* LOGOUT BUTTON */}
-          <div className="mt-6 pt-4 border-t border-slate-200">
-            <button
-              onClick={() => {
-                onLogout();
-                onClose();
-              }}
-              className="
-                w-full flex items-center justify-center gap-2 p-2
-                rounded-lg text-sm font-medium bg-rose-50 text-rose-700 
-                hover:bg-rose-100 transition
-              "
+        <div className="flex flex-col h-full">
+          
+          <div className="flex items-center justify-between p-8">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-indigo-600 flex items-center justify-center text-white shadow-xl shadow-indigo-600/30">
+                <RectangleGroupIcon className="w-6 h-6" />
+              </div>
+              <span className="text-xl font-black italic tracking-tighter text-white uppercase leading-none">
+                TRACK<span className="text-indigo-400">FIN</span>
+              </span>
+            </div>
+            <button 
+              onClick={onClose}
+              className="md:hidden p-2 rounded-xl text-slate-500 hover:text-white hover:bg-white/5 transition-all"
             >
-              <ArrowRightOnRectangleIcon className="w-5 h-5" />
-              Logout
+              <XMarkIcon className="w-6 h-6" />
             </button>
           </div>
 
-          {/* TIP BOX */}
-          <div className="mt-6 text-xs text-slate-500 pb-10">
-            <span className="px-2 py-1 rounded-full bg-teal-100 text-teal-700 font-medium">
-              Tip
-            </span>
-            <p className="mt-2">
-              Track expenses regularly to improve financial discipline.
-            </p>
+          <div className="flex-1 px-6 space-y-10 overflow-y-auto pt-4 selection:bg-indigo-500/30">
+            
+            <div className="space-y-2">
+              <p className="px-4 text-[10px] font-black text-slate-600 uppercase tracking-widest mb-4 italic">Workspace Control</p>
+              {navItems.map((item) => {
+                const active = pathname === item.href;
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    onClick={() => { if(window.innerWidth < 768) onClose(); }}
+                    className={`
+                      group flex items-center gap-4 px-4 py-4 rounded-2xl transition-all duration-300
+                      ${active 
+                        ? "bg-indigo-600 text-white shadow-xl shadow-indigo-600/20 scale-[1.02] border border-indigo-400/20" 
+                        : "hover:bg-white/5 text-slate-500 hover:text-white"
+                      }
+                    `}
+                  >
+                    <item.Icon className={`w-5.5 h-5.5 transition-transform group-hover:scale-110 ${active ? "text-white" : "text-slate-600"}`} />
+                    <span className="text-sm font-bold tracking-tight">{item.name}</span>
+                    {active && (
+                       <motion.div layoutId="sidebar-active" className="ml-auto w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_10px_white]" />
+                    )}
+                  </Link>
+                );
+              })}
+            </div>
+
+            <div className="space-y-2">
+              <p className="px-4 text-[10px] font-black text-slate-600 uppercase tracking-widest mb-4 italic">System Registry</p>
+              {secondaryItems.map((item) => {
+                const active = pathname === item.href;
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    onClick={() => { if(window.innerWidth < 768) onClose(); }}
+                    className={`
+                      group flex items-center gap-4 px-4 py-4 rounded-2xl transition-all duration-300
+                      ${active 
+                        ? "bg-white/10 text-white shadow-xl border border-white/10" 
+                        : "hover:bg-white/5 text-slate-500 hover:text-white"
+                      }
+                    `}
+                  >
+                    <item.Icon className={`w-5.5 h-5.5 transition-transform group-hover:scale-110 ${active ? "text-white" : "text-slate-600"}`} />
+                    <span className="text-sm font-bold tracking-tight">{item.name}</span>
+                  </Link>
+                );
+              })}
+            </div>
           </div>
 
-        </nav>
+          <div className="p-8 mt-auto">
+            <div className="p-6 rounded-[2rem] bg-indigo-600/5 border border-indigo-500/10 mb-8">
+               <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-2xl bg-indigo-600 flex items-center justify-center text-white shadow-lg">
+                     <ShieldCheckIcon className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-white leading-none mb-1">Session Secured</p>
+                    <p className="text-[10px] font-medium text-slate-500 italic">Financial Link Active</p>
+                  </div>
+               </div>
+            </div>
+
+            <button
+              onClick={() => { onLogout(); onClose(); }}
+              className="
+                w-full flex items-center gap-3 px-6 py-4 rounded-2xl 
+                text-[13px] font-bold text-slate-500 hover:text-white hover:bg-rose-500/80
+                border border-white/5 hover:border-rose-400/40 
+                transition-all duration-300 shadow-sm active:scale-95 group
+              "
+            >
+              <ArrowLeftOnRectangleIcon className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+              Sign Out
+            </button>
+          </div>
+
+        </div>
       </aside>
     </>
   );

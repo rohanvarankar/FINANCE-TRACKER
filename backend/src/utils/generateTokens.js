@@ -4,7 +4,7 @@ function generateAccessToken(userId) {
   return jwt.sign(
     { userId },
     process.env.JWT_SECRET,
-    { expiresIn: "15m" }   // access tokens are short-lived
+    { expiresIn: "1d" }   // Increased from 15m to 1d for better dev experience
   );
 }
 

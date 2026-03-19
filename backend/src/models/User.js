@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
 // Salt rounds for hashing passwords and OTPs
-const SALT_ROUNDS = 10;
+const SALT_ROUNDS = 8;
 
 // Create a new schema (structure of User document)
 const UserSchema = new mongoose.Schema({
@@ -27,6 +27,11 @@ const UserSchema = new mongoose.Schema({
     required: true          // Store encrypted version of password
   },
 
+  avatarUrl: {
+    type: String,
+    default: null           // URL or path to uploaded profile picture
+  },
+
   isVerified: {
     type: Boolean,
     default: false          // Becomes true only after OTP verification
@@ -42,6 +47,11 @@ const UserSchema = new mongoose.Schema({
     default: null           // OTP expires after X minutes
   },
 
+  isResetOTPVerified: {
+    type: Boolean,
+    default: false          // Becomes true after OTP verified for password reset
+  },
+
   createdAt: {
     type: Date,
     default: () => new Date()
@@ -50,6 +60,12 @@ const UserSchema = new mongoose.Schema({
   updatedAt: {
     type: Date,
     default: () => new Date()
+  },
+
+  householdId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Household",
+    default: null
   }
 });
 

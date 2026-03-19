@@ -1,1 +1,69 @@
 @import "tailwindcss";
+
+/* ─── Modern SaaS Luxury Design System ──────────────────────────── */
+:root {
+  --bg-main: #f8fafc;
+  --bg-card: #ffffff;
+  --text-primary: #0f172a; /* Deep Charcoal */
+  --text-secondary: #64748b;
+  --accent: #6366f1; /* Indigo */
+  --success: #10b981;
+  --danger: #ef4444;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  letter-spacing: -0.02em;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Soft Premium Card System ─────────────────────────────────── */
+.premium-card {
+  background: white;
+  border-radius: 1.5rem; /* 24px */
+  border: 1px solid rgba(226, 232, 240, 0.6);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.02), 0 4px 6px -4px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.premium-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.04), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+  border-color: var(--accent);
+}
+
+/* ─── Refined Interaction Tokens ────────────────────────────────── */
+.input-premium {
+  width: 100%;
+  padding: 0.875rem 1.25rem;
+  background: #ffffff;
+  border: 1.5px solid #f1f5f9;
+  border-radius: 1rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  outline: none;
+  transition: all 0.2s ease;
+}
+.input-premium:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+}
+
+/* ─── Minimal Utility ───────────────────────────────────────────── */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+::-webkit-scrollbar { width: 6px; }
+.custom-scrollbar::-webkit-scrollbar { width: 4px !important; }
+
+::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 20px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent !important; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1) !important; border-radius: 20px !important; }
+
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2) !important; }

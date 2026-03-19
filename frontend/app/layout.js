@@ -12,8 +12,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Personal Expense Tracker",
-  description: "Track your expenses smartly",
+  title: "FinTrack — Personal Finance Tracker",
+  description: "Track income & expenses, set budgets, plan goals and visualize your financial future. Free personal finance app.",
 };
 
 export default function RootLayout({ children }) {
@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
       <body
         className={`
           h-full ${geistSans.variable} ${geistMono.variable} 
-          antialiased bg-gradient-to-br from-[#e8fffb] via-white to-[#d0fff5]
+          antialiased
         `}
       >
         {/* GLOBAL WRAPPER FOR PROPER SIDEBAR + PAGE STRUCTURE */}

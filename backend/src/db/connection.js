@@ -12,6 +12,7 @@ async function connectDB(uri) {
     console.log("MongoDB connected successfully");
   } catch (error) {
     console.error("MongoDB connection error:", error.message);
+    throw error; // Re-throw to let the caller handle it (e.g. stop server start)
   }
 }
 

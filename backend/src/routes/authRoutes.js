@@ -32,4 +32,7 @@ router.post("/refresh-token", authController.refreshAccessToken);
 // Logout
 router.post("/logout", authController.logout);
 
+// Resend OTP
+router.post("/resend-otp", authController.resendOtp);
+
 module.exports = router;
