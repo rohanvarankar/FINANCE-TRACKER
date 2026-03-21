@@ -47,7 +47,8 @@ export default function SignUp() {
     setError("");
     try {
       await api.post("/auth/signup", form);
-      router.push("/auth/signin?registered=true");
+      // Redirect to OTP verification page instead of directly to sign in
+      router.push(`/auth/verify-otp?email=${encodeURIComponent(form.email)}&purpose=signup`);
     } catch (err) {
       setError(err?.response?.data?.message || "Failed to create account. Please try again.");
     } finally {

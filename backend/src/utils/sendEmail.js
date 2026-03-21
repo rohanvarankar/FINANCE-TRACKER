@@ -1,21 +1,37 @@
+require("dotenv").config();
 const nodemailer = require("nodemailer");
 
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+let transporter;
+
+function getTransporter() {
+  if (!transporter) {
+    transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+  }
+  return transporter;
+}
+
 
 async function sendEmail(to, subject, text, html) {
-  await transporter.sendMail({
-    from: `"FinTrack 💰" <${process.env.EMAIL_USER}>`,
-    to,
-    subject,
-    text, // fallback for non-HTML clients
-    html: html || `<p>${text}</p>`,
-  });
+  try {
+    const t = getTransporter();
+    const info = await t.sendMail({
+      from: `"FinTrack 💰" <${process.env.EMAIL_USER}>`,
+      to,
+      subject,
+      text, // fallback for non-HTML clients
+      html: html || `<p>${text}</p>`,
+    });
+    console.log(`✅ ACTUAL EMAIL SENT to ${to} (Message ID: ${info.messageId})`);
+  } catch (err) {
+    console.error(`❌ NODEMAILER ERROR while sending to ${to}:`, err.message);
+    throw err; // throw so the caller still knows it failed
+  }
 }
 
 /**
