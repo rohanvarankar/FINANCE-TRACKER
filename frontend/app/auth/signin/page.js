@@ -36,7 +36,7 @@ function AuthBackground() {
   );
 }
 
-export default function SignIn() {
+function SignInContent() {
   const [form, setForm] = useState({ email: "", password: "" });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -177,5 +177,15 @@ export default function SignIn() {
         </div>
       </motion.div>
     </div>
+  );
+}
+
+import { Suspense } from "react";
+
+export default function SignIn() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#020617] flex items-center justify-center"><div className="w-8 h-8 rounded-full border-2 border-indigo-500 border-t-transparent animate-spin" /></div>}>
+      <SignInContent />
+    </Suspense>
   );
 }
