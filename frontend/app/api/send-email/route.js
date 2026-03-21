@@ -6,8 +6,12 @@ export async function POST(request) {
     const { to, subject, text, html, secret } = await request.json();
 
     // Verify Shared Secret (Security layer between backend and frontend)
+    if (!process.env.EMAIL_API_SECRET) {
+      return NextResponse.json({ message: "Vercel missing EMAIL_API_SECRET in dashboard" }, { status: 500 });
+    }
     if (secret !== process.env.EMAIL_API_SECRET) {
-      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+      console.error("Vercel Security Failure: Key Mismatch.");
+      return NextResponse.json({ message: "Unauthorized: Key Mismatch" }, { status: 401 });
     }
 
     const transporter = nodemailer.createTransport({

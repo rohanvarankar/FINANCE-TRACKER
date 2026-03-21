@@ -2,7 +2,7 @@ require("dotenv").config();
 
 async function sendEmail(to, subject, text, html) {
   try {
-    const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3000";
+    let frontendUrl = (process.env.FRONTEND_URL || "http://localhost:3000").replace(/\/$/, "");
     const apiEndpoint = `${frontendUrl}/api/send-email`;
 
     // We relay the email through Vercel because Render's free tier blocks SMTP ports.
