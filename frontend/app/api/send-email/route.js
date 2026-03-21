@@ -9,6 +9,9 @@ export async function POST(request) {
     if (!process.env.EMAIL_API_SECRET) {
       return NextResponse.json({ message: "Vercel missing EMAIL_API_SECRET in dashboard" }, { status: 500 });
     }
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+      return NextResponse.json({ message: "Vercel missing EMAIL_USER or EMAIL_PASS in dashboard" }, { status: 500 });
+    }
     if (secret !== process.env.EMAIL_API_SECRET) {
       console.error("Vercel Security Failure: Key Mismatch.");
       return NextResponse.json({ message: "Unauthorized: Key Mismatch" }, { status: 401 });
