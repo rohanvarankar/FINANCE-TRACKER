@@ -129,7 +129,7 @@ Your app will now be live on `http://localhost:3000`!
 ---
 
 ## 🌐 Live Application
-* **Frontend Application:** [https://personalfianance.vercel.app](https://personalfianance.vercel.app)
+* **Frontend Application:** [https://personalfianance.vercel.app](https://trackfin-plum.vercel.app/)
 *(Note: Replace with standard production links when deploying!)*
 
 ---
