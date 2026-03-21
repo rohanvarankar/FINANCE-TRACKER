@@ -6,7 +6,8 @@ async function sendEmail(to, subject, text, html) {
     const apiEndpoint = `${frontendUrl}/api/send-email`;
 
     // We relay the email through Vercel because Render's free tier blocks SMTP ports.
-    // Vercel Edge/Serverless functions have trusted IP addresses for Gmail delivery.
+    // The Backend (Render) reads its own local Gmail secrets and sends them to Vercel over HTTPS.
+    // Vercel only accepts the relay if the EMAIL_API_SECRET matches.
     const response = await fetch(apiEndpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -15,13 +16,15 @@ async function sendEmail(to, subject, text, html) {
         subject,
         text,
         html: html || `<p>${text}</p>`,
-        secret: process.env.EMAIL_API_SECRET
+        secret: process.env.EMAIL_API_SECRET,
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
       }),
     });
 
     if (!response.ok) {
-      const errText = await response.text();
-      throw new Error(`Email Gateway Proxy Error: ${errText}`);
+        const errText = await response.text();
+        throw new Error(`Email Gateway Proxy Error: ${errText}`);
     }
 
     console.log(`✅ Email relayed successfully via Vercel to ${to}`);
