@@ -1,23 +1,30 @@
 require("dotenv").config();
-const Brevo = require("@getbrevo/brevo");
-
-const client = Brevo.ApiClient.instance;
-client.authentications["api-key"].apiKey = process.env.BREVO_API_KEY;
-
-const api = new Brevo.TransactionalEmailsApi();
 
 async function sendEmail(to, subject, text, html) {
   try {
-    await api.sendTransacEmail({
-      sender: { name: "FinTrack", email: process.env.EMAIL_USER }, // your Gmail
-      to: [{ email: to }],
-      subject,
-      textContent: text,
-      htmlContent: html || `<p>${text}</p>`,
+    const response = await fetch("https://api.brevo.com/v3/smtp/email", {
+      method: "POST",
+      headers: {
+        "api-key": process.env.BREVO_API_KEY,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        sender: { name: "FinTrack", email: process.env.EMAIL_USER }, // Uses your Gmail
+        to: [{ email: to }],
+        subject: subject,
+        textContent: text,
+        htmlContent: html || `<p>${text}</p>`,
+      }),
     });
-    console.log(`✅ Email sent to ${to}`);
+
+    if (!response.ok) {
+      const errText = await response.text();
+      throw new Error(`Brevo API Error: ${errText}`);
+    }
+
+    console.log(`✅ Email sent to ${to} via Brevo HTTP API`);
   } catch (err) {
-    console.error(`❌ Brevo error while sending to ${to}:`, err.message);
+    console.error(`❌ HTTP Error while sending to ${to}:`, err.message);
     throw err;
   }
 }
