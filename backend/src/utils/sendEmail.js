@@ -1,25 +1,23 @@
 require("dotenv").config();
-const { Resend } = require("resend");
+const Brevo = require("@getbrevo/brevo");
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const client = Brevo.ApiClient.instance;
+client.authentications["api-key"].apiKey = process.env.BREVO_API_KEY;
+
+const api = new Brevo.TransactionalEmailsApi();
 
 async function sendEmail(to, subject, text, html) {
   try {
-    const { data, error } = await resend.emails.send({
-      from: "FinTrack <onboarding@resend.dev>", // free no-domain sender
-      to,
+    await api.sendTransacEmail({
+      sender: { name: "FinTrack", email: process.env.EMAIL_USER }, // your Gmail
+      to: [{ email: to }],
       subject,
-      text,
-      html: html || `<p>${text}</p>`,
+      textContent: text,
+      htmlContent: html || `<p>${text}</p>`,
     });
-
-    if (error) {
-      console.error("❌ Resend API Error:", error);
-      throw new Error(error.message);
-    }
-    console.log(`✅ Email sent to ${to} with Resend ID: ${data?.id}`);
+    console.log(`✅ Email sent to ${to}`);
   } catch (err) {
-    console.error(`❌ Resend exception while sending to ${to}:`, err.message);
+    console.error(`❌ Brevo error while sending to ${to}:`, err.message);
     throw err;
   }
 }
