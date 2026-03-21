@@ -12,12 +12,13 @@
     "@heroicons/react": "^2.2.0",
     "axios": "^1.13.2",
     "framer-motion": "^12.23.25",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.8.2",
     "next": "16.0.7",
+    "nodemailer": "^8.0.3",
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "recharts": "^3.5.1",
-    "jspdf": "^2.5.1",
-    "jspdf-autotable": "^3.8.2",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {

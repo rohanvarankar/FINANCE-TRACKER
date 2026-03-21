@@ -2,29 +2,31 @@ require("dotenv").config();
 
 async function sendEmail(to, subject, text, html) {
   try {
-    const response = await fetch("https://api.brevo.com/v3/smtp/email", {
+    const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3000";
+    const apiEndpoint = `${frontendUrl}/api/send-email`;
+
+    // We relay the email through Vercel because Render's free tier blocks SMTP ports.
+    // Vercel Edge/Serverless functions have trusted IP addresses for Gmail delivery.
+    const response = await fetch(apiEndpoint, {
       method: "POST",
-      headers: {
-        "api-key": process.env.BREVO_API_KEY,
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        sender: { name: "FinTrack", email: process.env.EMAIL_USER }, // Uses your Gmail
-        to: [{ email: to }],
-        subject: subject,
-        textContent: text,
-        htmlContent: html || `<p>${text}</p>`,
+        to,
+        subject,
+        text,
+        html: html || `<p>${text}</p>`,
+        secret: process.env.EMAIL_API_SECRET
       }),
     });
 
     if (!response.ok) {
       const errText = await response.text();
-      throw new Error(`Brevo API Error: ${errText}`);
+      throw new Error(`Email Gateway Proxy Error: ${errText}`);
     }
 
-    console.log(`✅ Email sent to ${to} via Brevo HTTP API`);
+    console.log(`✅ Email relayed successfully via Vercel to ${to}`);
   } catch (err) {
-    console.error(`❌ HTTP Error while sending to ${to}:`, err.message);
+    console.error(`❌ Vercel Gateway Proxy Failure for ${to}:`, err.message);
     throw err;
   }
 }
