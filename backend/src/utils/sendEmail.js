@@ -1,5 +1,9 @@
 require("dotenv").config();
 const nodemailer = require("nodemailer");
+const dns = require("node:dns");
+
+// FIX FOR RENDER'S FREE TIER IPv6 TIMEOUT BUG
+dns.setDefaultResultOrder("ipv4first");
 
 let transporter;
 
