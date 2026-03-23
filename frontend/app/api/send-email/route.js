@@ -29,7 +29,7 @@ export async function POST(request) {
     });
 
     await transporter.sendMail({
-      from: `"FinTrack 💰" <${user}>`,
+      from: `"TrackFin 💰" <${user}>`,
       to,
       subject,
       text,

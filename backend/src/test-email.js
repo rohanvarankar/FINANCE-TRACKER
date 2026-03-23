@@ -1,7 +1,3 @@
-/**
- * Quick email test — run this directly to see exact error:
- * node src/test-email.js
- */
 require("dotenv").config();
 const nodemailer = require("nodemailer");
 
@@ -20,6 +16,11 @@ if (!EMAIL_USER || !EMAIL_PASS) {
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: { user: EMAIL_USER, pass: EMAIL_PASS },
+
+  // ✅ ADDED: better compatibility
+  tls: {
+    rejectUnauthorized: false,
+  },
 });
 
 transporter.verify((error, success) => {
@@ -37,17 +38,35 @@ transporter.verify((error, success) => {
     console.log("\n✅ SMTP connected! Sending test email to:", EMAIL_USER);
 
     transporter.sendMail({
-      from: `"FinTrack Test" <${EMAIL_USER}>`,
+      // ✅ IMPROVED: Proper sender format
+      from: `"TrackFin" <${EMAIL_USER}>`,
+
       to: EMAIL_USER,
-      subject: "✅ FinTrack Email Test",
-      text: "This is a test email from your FinTrack backend. If you see this, OTP emails will work!",
+
+      // ✅ IMPROVED SUBJECT (LESS SPAMMY)
+      subject: "TrackFin Test Email – Verification",
+
+      // ✅ IMPROVED TEXT VERSION (IMPORTANT)
+      text: "This is a TrackFin test email. If you received this, your email system is working correctly.",
+
       html: `
         <div style="font-family:sans-serif;max-width:400px;margin:auto;padding:24px;background:#f0fdfb;border-radius:16px;">
           <h2 style="color:#0d9488;">✅ Email is working!</h2>
-          <p>Your FinTrack backend can send emails successfully.</p>
+          <p>Your TrackFin backend can send emails successfully.</p>
           <p style="font-size:36px;font-weight:bold;letter-spacing:8px;color:#0f766e;text-align:center;">1 2 3 4 5 6</p>
           <p style="color:#64748b;font-size:13px;">This is how your OTP emails will look.</p>
-        </div>`
+        </div>`,
+
+      // ✅ ADDED: Headers for better deliverability
+      headers: {
+        "X-Mailer": "TrackFin",
+        "X-Priority": "1",
+        "X-MSMail-Priority": "High",
+        "Importance": "High",
+      },
+
+      // ✅ ADDED: reply-to improves trust
+      replyTo: EMAIL_USER,
     }, (err, info) => {
       if (err) {
         console.error("\n❌ SEND FAILED:", err.message);

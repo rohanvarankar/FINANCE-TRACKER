@@ -12,20 +12,38 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "FinTrack — Personal Finance Tracker",
-  description: "Track income & expenses, set budgets, plan goals and visualize your financial future. Free personal finance app.",
+  title: "TrackFin",
+  description: "AI Finance Tracker",
+  manifest: "/manifest.json",
+  themeColor: [{ color: "#060b18" }],
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="h-full">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function () {
+                  navigator.serviceWorker
+                    .register('/sw.js')
+                    .then(function (reg) {
+                      console.log('[SW] Registered. Scope:', reg.scope);
+                    })
+                    .catch(function (err) {
+                      console.error('[SW] Registration failed:', err);
+                    });
+                });
+              }
+            `,
+          }}
+        />
+      </head>
       <body
-        className={`
-          h-full ${geistSans.variable} ${geistMono.variable} 
-          antialiased
-        `}
+        className={`h-full ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* GLOBAL WRAPPER FOR PROPER SIDEBAR + PAGE STRUCTURE */}
         <div className="min-h-screen w-full">
           {children}
         </div>

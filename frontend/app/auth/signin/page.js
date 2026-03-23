@@ -163,7 +163,7 @@ function SignInContent() {
 
             <div className="mt-8 pt-6 border-t border-white/5 text-center">
               <p className="text-slate-400 text-sm font-medium">
-                New to FinTrack? 
+                New to TrackFin? 
                 <Link href="/auth/signup" className="text-indigo-400 hover:text-indigo-300 transition-colors ml-2 font-bold underline underline-offset-4 decoration-indigo-400/20 hover:decoration-indigo-400">
                   Create Account
                 </Link>

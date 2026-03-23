@@ -41,13 +41,22 @@ export default function SignUp() {
   const [error, setError] = useState("");
   const router = useRouter();
 
+  // ✅ ADDED: Password Regex
+  const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // ✅ ADDED: Validation before API call
+    if (!passwordRegex.test(form.password)) {
+      setError("Password must be 8+ chars, include uppercase, number & special character");
+      return;
+    }
+
     setIsLoading(true);
     setError("");
     try {
       await api.post("/auth/signup", form);
-      // Redirect to OTP verification page instead of directly to sign in
       router.push(`/auth/verify-otp?email=${encodeURIComponent(form.email)}&purpose=signup`);
     } catch (err) {
       setError(err?.response?.data?.message || "Failed to create account. Please try again.");
@@ -76,11 +85,10 @@ export default function SignUp() {
             <SparklesIcon className="w-8 h-8" />
           </motion.div>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-3">Create Account</h1>
-          <p className="text-slate-400 text-sm sm:text-base font-medium">Join 12,000+ users tracking their wealth with FinTrack</p>
+          <p className="text-slate-400 text-sm sm:text-base font-medium">Join 12,000+ users tracking their wealth with TrackFin</p>
         </div>
 
         <div className="relative group">
-          {/* Decorative Border Glow */}
           <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500/20 to-teal-500/20 rounded-[2.5rem] blur-xl opacity-0 group-hover:opacity-100 transition duration-1000 group-hover:duration-200" />
           
           <div className="relative bg-white/[0.03] backdrop-blur-2xl border border-white/10 rounded-[2rem] p-8 sm:p-10 shadow-2xl overflow-hidden">

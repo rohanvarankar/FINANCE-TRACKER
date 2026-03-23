@@ -39,10 +39,21 @@ export default function ResetPasswordPage() {
   const [msg, setMsg] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // ✅ ADDED: Password Regex
+  const passwordRegex =
+    /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setMsg("");
+
+    // ✅ ADDED: Validation before API call
+    if (!passwordRegex.test(newPassword)) {
+      setError("Password must be 8+ chars, include uppercase, number & special character");
+      return;
+    }
+
     setLoading(true);
 
     try {

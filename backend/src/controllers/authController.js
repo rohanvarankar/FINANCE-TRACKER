@@ -7,12 +7,22 @@ const { generateAccessToken, generateRefreshToken } = require("../utils/generate
 const jwt = require("jsonwebtoken");
 
 
+// ADD THIS AT TOP (after imports)
+const passwordRegex =
+  /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+
+
 // ======================================================
 // 1) SIGNUP  →  Store in PendingSignup (NOT in User yet)
 // ======================================================
 exports.signup = async (req, res) => {
   try {
     const { username, email, password } = req.body;
+    if (!passwordRegex.test(password)) {
+  return res.status(400).json({
+    message: "Password must be 8+ chars, include uppercase, number & special character",
+  });
+}
 
     if (!username || !email || !password)
       return res.status(400).json({ message: "All fields are required" });
@@ -223,6 +233,12 @@ exports.resetPassword = async (req, res) => {
   try {
     const { email, newPassword } = req.body;
 
+    if (!passwordRegex.test(newPassword)) {
+  return res.status(400).json({
+    message: "Password must be 8+ chars, include uppercase, number & special character",
+  });
+}
+
     if (!email || !newPassword)
       return res.status(400).json({ message: "Email and new password required" });
 
@@ -259,6 +275,11 @@ exports.changePassword = async (req, res) => {
   try {
     const userId = req.user.userId;
     const { oldPassword, newPassword } = req.body;
+    if (!passwordRegex.test(newPassword)) {
+  return res.status(400).json({
+    message: "Password must be 8+ chars, include uppercase, number & special character",
+  });
+}
 
     const user = await User.findById(userId);
     if (!user)
