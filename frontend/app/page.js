@@ -281,7 +281,7 @@ export default function Home() {
               <div className="text-2xl sm:text-3xl font-black text-white mb-1">
                 <AnimatedCounter end={s.end} suffix={s.suffix} />
               </div>
-              <p className="text-[10px] text-slate-600 font-bold">{s.label}</p>
+              <p className="text-[10px] text-white font-bold">{s.label}</p>
             </div>
           ))}
         </div>
@@ -291,7 +291,7 @@ export default function Home() {
       <section id="features" className="py-20 sm:py-24 px-4 sm:px-6 max-w-7xl mx-auto">
         <div className="text-center mb-14 sm:mb-20">
           <h2 className="text-3xl sm:text-4xl font-extrabold mb-4">Total Control</h2>
-          <p className="text-slate-500 max-w-md mx-auto text-sm sm:text-base">Everything you need to grow your wealth in one place.</p>
+          <p className="text-white max-w-md mx-auto text-sm sm:text-base">Everything you need to grow your wealth in one place.</p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8">
           {FEATURES.map((f) => (
@@ -300,7 +300,7 @@ export default function Home() {
                 {f.icon}
               </div>
               <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3">{f.title}</h3>
-              <p className="text-slate-500 text-sm leading-relaxed italic">{f.desc}</p>
+              <p className="text-white text-sm leading-relaxed italic">{f.desc}</p>
             </div>
           ))}
         </div>
@@ -310,7 +310,7 @@ export default function Home() {
       <section id="how-it-works" className="py-20 sm:py-24 px-4 sm:px-6 max-w-7xl mx-auto">
         <div className="text-center mb-14 sm:mb-20">
           <h2 className="text-3xl sm:text-4xl font-extrabold mb-4">How TrackFin Works</h2>
-          <p className="text-slate-500 max-w-2xl mx-auto text-sm sm:text-base">
+          <p className="text-white max-w-2xl mx-auto text-sm sm:text-base">
             From adding transactions to AI-powered insights — everything is simple, fast, and smart.
           </p>
         </div>
@@ -322,7 +322,7 @@ export default function Home() {
                 <span className="text-xs sm:text-sm font-bold text-teal-400">{step.num}</span>
               </div>
               <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3">{step.title}</h3>
-              <p className="text-slate-500 text-sm leading-relaxed">{step.desc}</p>
+              <p className="text-white text-sm leading-relaxed">{step.desc}</p>
             </div>
           ))}
         </div>
@@ -346,7 +346,7 @@ export default function Home() {
             <div className="w-full md:w-1/2 space-y-4 sm:space-y-6">
               <span className="px-3 py-1 rounded-full bg-teal-500/10 text-teal-400 text-xs font-bold uppercase tracking-widest">{s.badge}</span>
               <h3 className="text-2xl sm:text-3xl md:text-5xl font-black italic tracking-tighter uppercase">{s.title}</h3>
-              <p className="text-slate-500 text-base sm:text-lg italic leading-relaxed">{s.desc}</p>
+              <p className="text-white text-base sm:text-lg italic leading-relaxed">{s.desc}</p>
             </div>
             <div className="w-full md:w-1/2">
               <div className="rounded-2xl sm:rounded-[2.5rem] overflow-hidden border border-white/5 shadow-2xl">
@@ -370,7 +370,7 @@ export default function Home() {
                 </div>
                 <div className="text-xs font-bold">
                   <p className="text-white">{r.name}</p>
-                  <p className="text-slate-600">{r.role}</p>
+                  <p className="text-white">{r.role}</p>
                 </div>
               </div>
             </div>
@@ -397,7 +397,7 @@ export default function Home() {
       </section>
 
       {/* ── FOOTER ───────────────────────────────────────────────────────── */}
-      <footer className="py-8 sm:py-10 border-t border-white/5 text-center text-slate-600 text-[10px] font-bold uppercase tracking-widest px-4">
+      <footer className="py-8 sm:py-10 border-t border-white/5 text-center text-white text-[10px] font-bold uppercase tracking-widest px-4">
         © {new Date().getFullYear()} TrackFin — Your Financial Engine. Built with ❤️ in India.
       </footer>
     </div>

@@ -77,7 +77,7 @@ export default function EditTransactionModal({ open, onClose, onSave, initialDat
              </div>
              <div>
                 <h3 className="text-xl font-bold text-white tracking-tight">Edit Transaction</h3>
-                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest italic">ID: {initialData?._id?.slice(-8)}</p>
+                <p className="text-[10px] font-bold text-white uppercase tracking-widest italic">ID: {initialData?._id?.slice(-8)}</p>
              </div>
           </div>
           <button onClick={onClose} className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 transition active:scale-95">
@@ -90,15 +90,15 @@ export default function EditTransactionModal({ open, onClose, onSave, initialDat
             {['income', 'expense'].map(t => (
               <button 
                 key={t} type="button" onClick={() => setForm({...form, type: t})}
-                className={`flex-1 py-3.5 rounded-xl text-xs font-bold uppercase tracking-widest transition-all ${form.type === t ? 'bg-indigo-600 text-white shadow-xl shadow-indigo-600/20' : 'text-slate-500 hover:text-slate-400'}`}
+                className={`flex-1 py-3.5 rounded-xl text-xs font-bold uppercase tracking-widest transition-all ${form.type === t ? 'bg-indigo-600 text-white shadow-xl shadow-indigo-600/20' : 'text-white hover:text-slate-400'}`}
               >{t}</button>
             ))}
           </div>
 
           <div className="space-y-2">
-            <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest px-1">Description</label>
+            <label className="text-[10px] font-black text-white uppercase tracking-widest px-1">Description</label>
             <div className="relative group">
-              <DocumentTextIcon className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-indigo-400 transition" />
+              <DocumentTextIcon className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-white group-focus-within:text-indigo-400 transition" />
               <input
                 name="description" value={form.description} onChange={handleChange}
                 className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-5 text-sm font-bold text-white outline-none focus:bg-white/10 focus:border-indigo-500/50 transition-all"
@@ -109,9 +109,9 @@ export default function EditTransactionModal({ open, onClose, onSave, initialDat
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest px-1">Amount (₹)</label>
+              <label className="text-[10px] font-black text-white uppercase tracking-widest px-1">Amount (₹)</label>
               <div className="relative group">
-                <BanknotesIcon className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-indigo-400 transition" />
+                <BanknotesIcon className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-white group-focus-within:text-indigo-400 transition" />
                 <input
                   name="amount" value={form.amount} onChange={handleChange} type="number"
                   className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-5 text-sm font-bold text-white outline-none focus:bg-white/10 focus:border-indigo-500/50 transition-all"
@@ -121,9 +121,9 @@ export default function EditTransactionModal({ open, onClose, onSave, initialDat
             </div>
 
             <div className="space-y-2">
-              <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest px-1">Date</label>
+              <label className="text-[10px] font-black text-white uppercase tracking-widest px-1">Date</label>
               <div className="relative group">
-                <CalendarDaysIcon className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-indigo-400 transition" />
+                <CalendarDaysIcon className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-white group-focus-within:text-indigo-400 transition" />
                 <input 
                   name="date" value={form.date} onChange={handleChange} type="date" 
                   className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-5 text-sm font-bold text-white outline-none focus:bg-white/10 focus:border-indigo-500/50 transition-all cursor-pointer" 
@@ -137,7 +137,7 @@ export default function EditTransactionModal({ open, onClose, onSave, initialDat
           </AnimatePresence>
 
           <div className="flex flex-col-reverse sm:flex-row justify-end gap-3 mt-4 pt-6 border-t border-white/5">
-            <button onClick={onClose} disabled={saving} className="px-8 py-3.5 rounded-2xl bg-white/5 text-slate-500 hover:bg-white/10 font-bold text-xs transition active:scale-95">
+            <button onClick={onClose} disabled={saving} className="px-8 py-3.5 rounded-2xl bg-white/5 text-white hover:bg-white/10 font-bold text-xs transition active:scale-95">
               Cancel
             </button>
             <button 

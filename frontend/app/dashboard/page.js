@@ -214,22 +214,22 @@ export default function Dashboard() {
                      </h3>
                      <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-4 gap-6 relative z-10">
                         <div className="md:col-span-1 space-y-2">
-                           <label className="text-[11px] font-black text-slate-500 uppercase tracking-widest px-1">Type</label>
+                           <label className="text-[11px] font-black text-white uppercase tracking-widest px-1">Type</label>
                            <div className="flex p-1.5 bg-white/5 rounded-2xl border border-white/5">
-                              <button type="button" onClick={() => setForm({...form, type:'income'})} className={`flex-1 py-3 rounded-xl text-[11px] font-bold uppercase transition-all ${form.type === 'income' ? 'bg-white/10 text-emerald-400 shadow-lg' : 'text-slate-500'}`}>Income</button>
-                              <button type="button" onClick={() => setForm({...form, type:'expense'})} className={`flex-1 py-3 rounded-xl text-[11px] font-bold uppercase transition-all ${form.type === 'expense' ? 'bg-white/10 text-rose-400 shadow-lg' : 'text-slate-500'}`}>Expense</button>
+                              <button type="button" onClick={() => setForm({...form, type:'income'})} className={`flex-1 py-3 rounded-xl text-[11px] font-bold uppercase transition-all ${form.type === 'income' ? 'bg-white/10 text-emerald-400 shadow-lg' : 'text-white'}`}>Income</button>
+                              <button type="button" onClick={() => setForm({...form, type:'expense'})} className={`flex-1 py-3 rounded-xl text-[11px] font-bold uppercase transition-all ${form.type === 'expense' ? 'bg-white/10 text-rose-400 shadow-lg' : 'text-white'}`}>Expense</button>
                            </div>
                         </div>
                         <div className="md:col-span-1 space-y-2">
-                           <label className="text-[11px] font-black text-slate-500 uppercase tracking-widest px-1">Amount (₹)</label>
+                           <label className="text-[11px] font-black text-white uppercase tracking-widest px-1">Amount (₹)</label>
                            <input type="number" placeholder="0.00" value={form.amount} onChange={e => setForm({...form, amount: e.target.value})} className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-white text-xl font-bold placeholder:text-slate-700 outline-none focus:border-indigo-500/50 transition-all" required />
                         </div>
                         <div className="md:col-span-1 space-y-2">
-                           <label className="text-[11px] font-black text-slate-500 uppercase tracking-widest px-1">Description</label>
+                           <label className="text-[11px] font-black text-white uppercase tracking-widest px-1">Description</label>
                            <input type="text" placeholder="What was it for?" value={form.description} onChange={e => setForm({...form, description: e.target.value})} className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-white font-medium placeholder:text-slate-700 outline-none focus:border-indigo-500/50 transition-all" required />
                         </div>
                         <div className="md:col-span-1 space-y-2">
-                           <label className="text-[11px] font-black text-slate-500 uppercase tracking-widest px-1">Category</label>
+                           <label className="text-[11px] font-black text-white uppercase tracking-widest px-1">Category</label>
                            <select value={form.categoryId} onChange={e => setForm({...form, categoryId: e.target.value})} className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-white font-medium placeholder:text-slate-700 outline-none focus:border-indigo-500/50 appearance-none bg-no-repeat bg-[right_1.5rem_center] transition-all cursor-pointer" required>
                               <option value="" className="bg-[#0f172a]">Select category</option>
                               {categories.filter(c => c.type === form.type).map(c => <option key={c._id} value={c._id} className="bg-[#0f172a]">{c.name}</option>)}
@@ -254,13 +254,13 @@ export default function Dashboard() {
                  <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest bg-emerald-400/10 px-3 py-1 rounded-full border border-emerald-400/20">Operational</span>
               </div>
               <div>
-                 <p className="text-[11px] font-bold text-slate-500 uppercase tracking-[3px] mb-2 italic">Total Balance</p>
+                 <p className="text-[11px] font-bold text-white uppercase tracking-[3px] mb-2 italic">Total Balance</p>
                  <h3 className="text-3xl font-extrabold text-white mb-2">₹{(summary.balance || 0).toLocaleString()}</h3>
                  <div className="flex items-center gap-2">
                    <div className="h-1 bg-white/5 rounded-full flex-1 overflow-hidden">
                       <div className="h-full bg-indigo-500 w-[65%]" />
                    </div>
-                   <span className="text-[10px] font-bold text-slate-500 uppercase">Vault</span>
+                   <span className="text-[10px] font-bold text-white uppercase">Vault</span>
                  </div>
               </div>
             </motion.div>
@@ -273,7 +273,7 @@ export default function Dashboard() {
                  <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest bg-indigo-400/10 px-3 py-1 rounded-full border border-indigo-400/20">Income</span>
               </div>
               <div>
-                 <p className="text-[11px] font-bold text-slate-500 uppercase tracking-[3px] mb-2 italic">Total Income</p>
+                 <p className="text-[11px] font-bold text-white uppercase tracking-[3px] mb-2 italic">Total Income</p>
                  <h3 className="text-3xl font-extrabold text-white mb-2">+₹{(summary.totalIncome || 0).toLocaleString()}</h3>
                  <p className="text-[10px] text-emerald-400 font-bold flex items-center gap-1">
                    <ArrowUpIcon className="w-3 h-3" /> 12% Growth
@@ -289,7 +289,7 @@ export default function Dashboard() {
                  <span className="text-[10px] font-bold text-rose-400 uppercase tracking-widest bg-rose-400/10 px-3 py-1 rounded-full border border-rose-400/20">Spending</span>
               </div>
               <div>
-                 <p className="text-[11px] font-bold text-slate-500 uppercase tracking-[3px] mb-2 italic">Total Expenses</p>
+                 <p className="text-[11px] font-bold text-white uppercase tracking-[3px] mb-2 italic">Total Expenses</p>
                  <h3 className="text-3xl font-extrabold text-white mb-2">-₹{(summary.totalExpense || 0).toLocaleString()}</h3>
                  <p className="text-[10px] text-rose-400 font-bold flex items-center gap-1">
                    <ArrowDownIcon className="w-3 h-3" /> 5% Increase
@@ -307,7 +307,7 @@ export default function Dashboard() {
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-12 relative z-10">
                     <div className="space-y-1">
                        <h3 className="text-xl font-bold text-white uppercase tracking-tight">Income Flow</h3>
-                       <p className="text-xs font-medium text-slate-500">Analytics visualization across recordsets</p>
+                       <p className="text-xs font-medium text-white">Analytics visualization across recordsets</p>
                     </div>
                     <div className="flex items-center gap-2 bg-white/5 p-1 rounded-2xl border border-white/5">
                        <button onClick={() => setChartView("live")} className={`px-5 py-2.5 rounded-xl text-[10px] font-bold uppercase tracking-widest italic transition-all ${chartView === 'live' ? 'bg-indigo-600 text-white shadow-xl' : 'text-slate-400 hover:text-white'}`}>Live</button>
@@ -327,9 +327,9 @@ export default function Dashboard() {
                         <h3 className="text-lg font-bold text-white uppercase tracking-tight">Recent Activity</h3>
                      </div>
                      <div className="bg-white/5 border border-white/10 rounded-2xl flex items-center px-4 overflow-hidden focus-within:border-indigo-500/50 transition-all min-w-[250px]">
-                        <MagnifyingGlassIcon className="w-4 h-4 text-slate-500" />
+                        <MagnifyingGlassIcon className="w-4 h-4 text-white" />
                         <input 
-                           type="text" placeholder="Search..." className="w-full h-11 bg-transparent pl-3 text-xs font-medium text-white outline-none placeholder:text-slate-600" 
+                           type="text" placeholder="Search..." className="w-full h-11 bg-transparent pl-3 text-xs font-medium text-white outline-none placeholder:text-white" 
                            onChange={e => setFilters({...filters, q: e.target.value})}
                         />
                      </div>
@@ -346,7 +346,7 @@ export default function Dashboard() {
                           <div className="w-16 h-16 rounded-3xl bg-white/5 flex items-center justify-center mx-auto mb-6">
                              <ChartBarSquareIcon className="w-8 h-8 text-slate-700" />
                           </div>
-                          <p className="text-sm font-bold text-slate-600 uppercase tracking-widest">No activity found</p>
+                          <p className="text-sm font-bold text-white uppercase tracking-widest">No activity found</p>
                        </div>
                     )}
                   </div>
@@ -354,7 +354,7 @@ export default function Dashboard() {
                   {/* PAGINATION */}
                   <div className="flex justify-between items-center py-6 px-10 bg-white/[0.03] backdrop-blur-2xl border border-white/10 rounded-[2.5rem]">
                      <div className="space-y-1">
-                        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[2px]">Page <span className="text-white">{page}</span> of {totalPages}</p>
+                        <p className="text-[10px] font-bold text-white uppercase tracking-[2px]">Page <span className="text-white">{page}</span> of {totalPages}</p>
                         <div className="h-1 bg-white/5 rounded-full w-20 overflow-hidden"><div className="h-full bg-indigo-500" style={{ width: `${(page/totalPages)*100}%` }} /></div>
                      </div>
                      <div className="flex gap-3">
@@ -381,17 +381,17 @@ export default function Dashboard() {
                      <div className="space-y-8">
                         <div className="space-y-4">
                            <div className="flex justify-between items-end border-b border-white/5 pb-4">
-                              <span className="text-xs font-bold text-slate-500 uppercase tracking-widest italic leading-none">Net Balance</span>
+                              <span className="text-xs font-bold text-white uppercase tracking-widest italic leading-none">Net Balance</span>
                               <span className="text-2xl font-black italic text-white leading-none">₹{(summary.balance || 0).toLocaleString()}</span>
                            </div>
                            <div className="flex justify-between items-end border-b border-white/5 pb-4">
-                              <span className="text-xs font-bold text-slate-500 uppercase tracking-widest italic leading-none">Expense Ratio</span>
+                              <span className="text-xs font-bold text-white uppercase tracking-widest italic leading-none">Expense Ratio</span>
                               <span className="text-2xl font-black italic text-rose-400 leading-none">{(summary.totalExpense / (summary.totalIncome || 1) * 100).toFixed(1)}%</span>
                            </div>
                         </div>
 
                         <div className="bg-white/5 rounded-[2rem] p-6 border border-white/5 text-center space-y-4">
-                           <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Financial Tip</p>
+                           <p className="text-[10px] font-bold text-white uppercase tracking-widest">Financial Tip</p>
                            <p className="text-sm font-medium text-slate-300 italic leading-relaxed">"Aim for <span className="text-indigo-400 font-bold">20% savings</span> this month to hit your goals."</p>
                         </div>
                      </div>
@@ -416,7 +416,7 @@ export default function Dashboard() {
                      ))}
                      <button 
                         onClick={() => router.push("/reports")}
-                        className="w-full py-4 border border-dashed border-white/10 text-slate-500 rounded-2xl text-[10px] font-bold uppercase tracking-widest hover:border-indigo-500/50 hover:text-indigo-400 transition-all mt-4 italic active:scale-95"
+                        className="w-full py-4 border border-dashed border-white/10 text-white rounded-2xl text-[10px] font-bold uppercase tracking-widest hover:border-indigo-500/50 hover:text-indigo-400 transition-all mt-4 italic active:scale-95"
                      >
                         View Full Statistics
                      </button>

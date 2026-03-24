@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import Link from "next/link";
 import { 
   Bars3Icon, 
   BellIcon, 
   MagnifyingGlassIcon, 
-  UserCircleIcon, 
   RectangleGroupIcon,
   CheckCircleIcon,
   ExclamationTriangleIcon,
@@ -49,7 +49,6 @@ export default function Header({ onToggleSidebar, username = "User" }) {
   const [notifications, setNotifications] = useState(MOCK_NOTIFICATIONS);
   const dropdownRef = useRef(null);
 
-  // Persistence: Load from localStorage on mount
   useEffect(() => {
     const saved = localStorage.getItem("user_notifications");
     if (saved) {
@@ -61,10 +60,9 @@ export default function Header({ onToggleSidebar, username = "User" }) {
     }
   }, []);
 
-  // Persistence: Save to localStorage when notifications change
   useEffect(() => {
     if (notifications !== MOCK_NOTIFICATIONS) {
-       localStorage.setItem("user_notifications", JSON.stringify(notifications));
+      localStorage.setItem("user_notifications", JSON.stringify(notifications));
     }
   }, [notifications]);
 
@@ -92,7 +90,6 @@ export default function Header({ onToggleSidebar, username = "User" }) {
     fetchProfile();
   }, []);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -121,12 +118,22 @@ export default function Header({ onToggleSidebar, username = "User" }) {
           <Bars3Icon className="w-6 h-6" />
         </button>
 
+        {/* FIX: TrackFin logo — clicking redirects to /dashboard */}
+        <Link href="/dashboard" className="flex items-center gap-3 md:hidden">
+          <div className="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-lg shadow-indigo-600/30">
+            <RectangleGroupIcon className="w-5 h-5" />
+          </div>
+          <span className="text-base font-black italic tracking-tighter text-white uppercase leading-none">
+            TRACK<span className="text-indigo-400">FIN</span>
+          </span>
+        </Link>
+
         <div className="hidden lg:flex items-center bg-white/5 border border-white/10 rounded-2xl px-5 py-2.5 w-80 focus-within:border-indigo-500/50 transition-all">
-          <MagnifyingGlassIcon className="w-5 h-5 text-slate-500" />
+          <MagnifyingGlassIcon className="w-5 h-5 text-white" />
           <input 
             type="text" 
             placeholder="Search records..." 
-            className="bg-transparent border-none text-sm font-medium text-white outline-none w-full ml-3 placeholder:text-slate-600" 
+            className="bg-transparent border-none text-sm font-medium text-white outline-none w-full ml-3 placeholder:text-white" 
           />
         </div>
       </div>
@@ -162,7 +169,7 @@ export default function Header({ onToggleSidebar, username = "User" }) {
                     )}
                     <button 
                       onClick={() => setShowNotifications(false)}
-                      className="p-1 rounded-lg hover:bg-white/5 text-slate-500 md:hidden"
+                      className="p-1 rounded-lg hover:bg-white/5 text-white md:hidden"
                     >
                       <XMarkIcon className="w-5 h-5" />
                     </button>
@@ -185,16 +192,10 @@ export default function Header({ onToggleSidebar, username = "User" }) {
                         </div>
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className={`text-sm font-bold transition-colors ${notif.read ? 'text-slate-500' : 'text-white'}`}>
-                          {notif.title}
-                        </p>
-                        <p className="text-[13px] text-slate-500 leading-relaxed mt-1 line-clamp-2 italic">
-                          {notif.message}
-                        </p>
+                        <p className="text-sm font-bold text-white">{notif.title}</p>
+                        <p className="text-[13px] text-white leading-relaxed mt-1 line-clamp-2 italic">{notif.message}</p>
                         <div className="flex items-center justify-between mt-3">
-                          <p className="text-[11px] font-medium text-slate-700 uppercase tracking-wider">
-                            {notif.time}
-                          </p>
+                          <p className="text-[11px] font-medium text-slate-400 uppercase tracking-wider">{notif.time}</p>
                           <div className={`w-1.5 h-1.5 rounded-full bg-indigo-500 transition-opacity ${notif.read ? 'opacity-0' : 'opacity-100 group-hover:animate-pulse'}`} />
                         </div>
                       </div>
@@ -202,7 +203,7 @@ export default function Header({ onToggleSidebar, username = "User" }) {
                   ))}
                   {notifications.length === 0 && (
                     <div className="p-10 text-center">
-                      <p className="text-slate-500 text-sm italic">Nothing but calm...</p>
+                      <p className="text-white text-sm italic">Nothing but calm...</p>
                     </div>
                   )}
                 </div>
@@ -211,7 +212,7 @@ export default function Header({ onToggleSidebar, username = "User" }) {
                   <button 
                     onClick={handleMarkAllRead}
                     disabled={unreadCount === 0}
-                    className="w-full py-3.5 text-[11px] font-black text-slate-500 hover:text-white transition uppercase tracking-[2px] bg-white/5 rounded-2xl border border-white/5 hover:border-indigo-500/30 hover:bg-indigo-500/5 active:scale-95 disabled:opacity-30 disabled:pointer-events-none"
+                    className="w-full py-3.5 text-[11px] font-black text-white hover:text-white transition uppercase tracking-[2px] bg-white/5 rounded-2xl border border-white/5 hover:border-indigo-500/30 hover:bg-indigo-500/5 active:scale-95 disabled:opacity-30 disabled:pointer-events-none"
                   >
                     Mark all as read
                   </button>
@@ -223,26 +224,26 @@ export default function Header({ onToggleSidebar, username = "User" }) {
 
         <div className="h-8 w-px bg-white/5 hidden sm:block" />
 
-        <div className="flex items-center gap-4 group cursor-pointer p-1 rounded-full hover:bg-white/5 transition-all active:scale-[0.98]">
-           <div className="text-right hidden sm:block pl-3">
-              <p className="text-sm font-bold text-white leading-none mb-1">{user.username}</p>
-              <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest leading-none">Verified Manager</p>
-           </div>
-           
-           {user.avatarUrl ? (
-             <div className="w-10 h-10 md:w-11 md:h-11 rounded-2xl border border-white/10 overflow-hidden bg-white/5">
-                <img 
-                  src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}${user.avatarUrl}`} 
-                  alt="Avatar" 
-                  className="w-full h-full object-cover" 
-                />
-             </div>
-           ) : (
-             <div className="w-10 h-10 md:w-11 md:h-11 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-700 flex items-center justify-center text-white font-bold text-[15px] shadow-lg shadow-indigo-600/20">
-               {user.username.charAt(0)}
-             </div>
-           )}
-        </div>
+        {/* FIX: Avatar wrapped in Link — clicking redirects to /profile */}
+        <Link href="/profile" className="flex items-center gap-4 group cursor-pointer p-1 rounded-full hover:bg-white/5 transition-all active:scale-[0.98]">
+          <div className="text-right hidden sm:block pl-3">
+            <p className="text-sm font-bold text-white leading-none mb-1">{user.username}</p>
+            <p className="text-[10px] font-bold text-white uppercase tracking-widest leading-none">Verified Manager</p>
+          </div>
+          {user.avatarUrl ? (
+            <div className="w-10 h-10 md:w-11 md:h-11 rounded-2xl border border-white/10 overflow-hidden bg-white/5">
+              <img 
+                src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}${user.avatarUrl}`} 
+                alt="Avatar" 
+                className="w-full h-full object-cover" 
+              />
+            </div>
+          ) : (
+            <div className="w-10 h-10 md:w-11 md:h-11 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-700 flex items-center justify-center text-white font-bold text-[15px] shadow-lg shadow-indigo-600/20">
+              {user.username.charAt(0)}
+            </div>
+          )}
+        </Link>
       </div>
     </header>
   );

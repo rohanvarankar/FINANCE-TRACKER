@@ -87,18 +87,18 @@ export default function Categories() {
                    </h3>
                    <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-4 gap-6">
                       <div className="md:col-span-2 space-y-2">
-                        <label className="text-[11px] font-black text-slate-500 uppercase tracking-widest px-1">Name</label>
-                        <input className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-white text-sm font-bold placeholder:text-slate-700 outline-none focus:border-indigo-500/50 transition-all uppercase" type="text" placeholder="e.g. Dining, Travel, Rent..." value={form.name} onChange={e => setForm({...form, name: e.target.value})} required />
+                        <label className="text-[11px] font-black text-white uppercase tracking-widest px-1">Name</label>
+                        <input className="w-full bg-white border border-white/10 rounded-2xl py-4 px-6 text-black text-sm font-bold placeholder:text-slate-700 outline-none focus:border-indigo-500/50 transition-all uppercase" type="text" placeholder="e.g. Dining, Travel, Rent..." value={form.name} onChange={e => setForm({...form, name: e.target.value})} required />
                       </div>
                       <div className="space-y-2">
-                        <label className="text-[11px] font-black text-slate-500 uppercase tracking-widest px-1">Type</label>
-                        <select className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-white font-medium placeholder:text-slate-700 outline-none focus:border-indigo-500/50 appearance-none bg-[#0f172a] transition-all cursor-pointer" value={form.type} onChange={e => setForm({...form, type: e.target.value})}>
+                        <label className="text-[11px] font-black text-white  uppercase tracking-widest px-1">Type</label>
+                        <select className="w-full bg-white border border-white/10 rounded-2xl py-4 px-6 text-black font-medium placeholder:text-slate-700 outline-none focus:border-indigo-500/50 appearance-none bg-[#0f172a] transition-all cursor-pointer" value={form.type} onChange={e => setForm({...form, type: e.target.value})}>
                             <option value="expense">Expense</option>
                             <option value="income">Income</option>
                         </select>
                       </div>
                       <div className="space-y-2">
-                        <label className="text-[11px] font-black text-slate-500 uppercase tracking-widest px-1">Color</label>
+                        <label className="text-[11px] font-black text-white uppercase tracking-widest px-1">Color</label>
                         <input className="w-full h-13 sm:h-auto bg-white/5 border border-white/10 rounded-2xl p-2 cursor-pointer outline-none focus:border-indigo-500/50 transition-all shadow-inner" type="color" value={form.color} onChange={e => setForm({...form, color: e.target.value})} />
                       </div>
                       <button type="submit" className="md:col-span-4 py-4 rounded-2xl bg-indigo-600 text-white font-bold transition-all shadow-xl shadow-indigo-600/10 hover:bg-indigo-500">Confirm and Save</button>
@@ -126,7 +126,7 @@ export default function Categories() {
                     </div>
                     <div className="overflow-hidden">
                       <h4 className="text-base font-bold text-white tracking-tight uppercase leading-none truncate mb-1">{cat.name}</h4>
-                      <p className={`text-[10px] font-black uppercase tracking-widest ${cat.type === 'income' ? 'text-indigo-400' : 'text-slate-500'}`}>{cat.type === 'income' ? 'Income' : 'Expense'}</p>
+                      <p className={`text-[10px] font-black uppercase tracking-widest ${cat.type === 'income' ? 'text-indigo-400' : 'text-white'}`}>{cat.type === 'income' ? 'Income' : 'Expense'}</p>
                     </div>
                   </div>
 
@@ -134,7 +134,7 @@ export default function Categories() {
                      <div className="flex-1 h-1 bg-white/5 rounded-full overflow-hidden shadow-inner">
                         <div className="h-full transition-all duration-1000 rounded-full" style={{ width: '100%', backgroundColor: cat.color }} />
                      </div>
-                     <button onClick={() => handleDelete(cat._id)} className="ml-5 p-3 rounded-xl bg-white/5 text-slate-600 hover:bg-rose-500/20 hover:text-rose-400 border border-white/5 transition-all active:scale-[0.9]">
+                     <button onClick={() => handleDelete(cat._id)} className="ml-5 p-3 rounded-xl bg-white/5 text-white hover:bg-rose-500/20 hover:text-rose-400 border border-white/5 transition-all active:scale-[0.9]">
                         <TrashIcon className="w-5 h-5" />
                      </button>
                   </div>
@@ -143,7 +143,7 @@ export default function Categories() {
               {categories.length === 0 && !loading && (
                  <div className="md:col-span-3 py-32 text-center bg-white/5 border border-dashed border-white/10 rounded-[2.5rem]">
                     <div className="w-16 h-16 rounded-3xl bg-white/5 flex items-center justify-center mx-auto mb-6"><TagIcon className="w-8 h-8 text-slate-700" /></div>
-                    <p className="text-sm font-bold text-slate-600 uppercase tracking-widest italic tracking-[3px]">Waiting for your first category...</p>
+                    <p className="text-sm font-bold text-white uppercase tracking-widest italic tracking-[3px]">Waiting for your first category...</p>
                  </div>
               )}
             </div>

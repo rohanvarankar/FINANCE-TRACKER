@@ -40,7 +40,7 @@ export default function DeleteConfirmModal({ open, onClose, onConfirm, message }
           </button>
           <button 
             onClick={onClose} 
-            className="w-full py-4 rounded-2xl bg-white/5 hover:bg-white/10 text-slate-500 font-bold text-sm transition-all active:scale-95"
+            className="w-full py-4 rounded-2xl bg-white/5 hover:bg-white/10 text-white font-bold text-sm transition-all active:scale-95"
           >
             Cancel
           </button>

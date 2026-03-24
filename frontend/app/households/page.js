@@ -117,7 +117,7 @@ export default function Households() {
                      <HomeIcon className="w-10 h-10" />
                   </div>
                   <h3 className="text-2xl font-bold mb-4 uppercase tracking-tight">Create a Home</h3>
-                  <p className="text-slate-500 mb-10 max-w-xs text-sm font-medium leading-relaxed italic">Start a fresh financial shared space and invite your family members today.</p>
+                  <p className="text-white mb-10 max-w-xs text-sm font-medium leading-relaxed italic">Start a fresh financial shared space and invite your family members today.</p>
                   <button 
                     onClick={() => setShowCreate(true)}
                     className="w-full py-5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-bold transition-all shadow-xl shadow-indigo-600/10 flex items-center justify-center gap-3"
@@ -134,7 +134,7 @@ export default function Households() {
                      <SparklesIcon className="w-10 h-10" />
                   </div>
                   <h3 className="text-2xl font-bold mb-4 uppercase tracking-tight">Join Existing</h3>
-                  <p className="text-slate-500 mb-10 max-w-xs text-sm font-medium leading-relaxed italic">Have an invite code? Enter it to sync your budgets with your team.</p>
+                  <p className="text-white mb-10 max-w-xs text-sm font-medium leading-relaxed italic">Have an invite code? Enter it to sync your budgets with your team.</p>
                   <button 
                     onClick={() => setShowJoin(true)}
                     className="w-full py-5 border border-white/10 hover:border-indigo-500/50 hover:bg-white/5 text-slate-300 rounded-2xl font-bold transition-all flex items-center justify-center gap-3"
@@ -155,11 +155,11 @@ export default function Households() {
                               <span className="w-1.5 h-6 bg-indigo-500 rounded-full" />
                               <h2 className="text-4xl font-extrabold text-white tracking-tight uppercase italic">{household.name}</h2>
                            </div>
-                           <p className="text-slate-500 text-sm font-medium tracking-[2px] uppercase">Established on {new Date(household.createdAt).toLocaleDateString()} • {household.members.length} Members</p>
+                           <p className="text-white text-sm font-medium tracking-[2px] uppercase">Established on {new Date(household.createdAt).toLocaleDateString()} • {household.members.length} Members</p>
                            <div className="pt-6 flex items-center gap-4">
                               <div className="bg-white/5 border border-white/10 rounded-2xl p-4 flex items-center gap-6 group/code cursor-pointer active:scale-95 transition-all">
                                  <div>
-                                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Invite Code</p>
+                                    <p className="text-[10px] font-bold text-white uppercase tracking-widest mb-1">Invite Code</p>
                                     <p className="text-xl font-black text-indigo-400 tracking-[5px] uppercase">{household.inviteCode}</p>
                                  </div>
                                  <button onClick={() => { navigator.clipboard.writeText(household.inviteCode); alert("Copied!"); }} className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-slate-400 hover:text-white group-hover/code:bg-indigo-600 group-hover/code:text-white transition-all">
@@ -195,7 +195,7 @@ export default function Households() {
                               </div>
                               <div className="flex-1">
                                  <h4 className="text-lg font-bold text-white uppercase tracking-tight">{member.username}</h4>
-                                 <p className="text-xs font-bold text-slate-500">{member.email}</p>
+                                 <p className="text-xs font-bold text-white">{member.email}</p>
                               </div>
                               <ChevronRightIcon className="w-5 h-5 text-slate-800" />
                            </motion.div>
@@ -215,7 +215,7 @@ export default function Households() {
                         </div>
                         <div className="space-y-6">
                            <div className="flex justify-between items-end border-b border-white/5 pb-4">
-                              <span className="text-[10px] font-black italic text-slate-500 uppercase tracking-widest">Total Members</span>
+                              <span className="text-[10px] font-black italic text-white uppercase tracking-widest">Total Members</span>
                               <span className="text-2xl font-black italic text-white uppercase">{household.members.length}</span>
                            </div>
                            <div className="bg-indigo-600/10 border border-indigo-500/20 rounded-3xl p-6 text-center italic space-y-3">
@@ -234,12 +234,12 @@ export default function Households() {
             {showCreate && (
               <div className="fixed inset-0 z-[110] flex items-center justify-center p-6 bg-black/80 backdrop-blur-sm">
                 <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-[#0f172a] border border-white/10 rounded-[2.5rem] p-12 max-w-md w-full shadow-2xl relative">
-                   <button onClick={() => setShowCreate(false)} className="absolute top-8 right-8 text-slate-500 hover:text-white"><XMarkIcon className="w-6 h-6" /></button>
+                   <button onClick={() => setShowCreate(false)} className="absolute top-8 right-8 text-white hover:text-white"><XMarkIcon className="w-6 h-6" /></button>
                    <h3 className="text-2xl font-bold text-white mb-2 uppercase tracking-tight">Create Household</h3>
-                   <p className="text-slate-500 text-sm mb-8 italic">Name your shared financial space.</p>
+                   <p className="text-white text-sm mb-8 italic">Name your shared financial space.</p>
                    <form onSubmit={handleCreate} className="space-y-6">
                       <div className="space-y-2">
-                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest px-1 italic">Household Name</label>
+                        <label className="text-[10px] font-black text-white uppercase tracking-widest px-1 italic">Household Name</label>
                         <input type="text" placeholder="e.g. My Family" value={form.name} onChange={e => setForm({...form, name: e.target.value})} className="w-full bg-white/5 border border-white/10 rounded-2xl py-5 px-8 text-white font-bold outline-none focus:border-indigo-500/50 transition-all" required />
                       </div>
                       <button type="submit" className="w-full py-5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-bold shadow-xl shadow-indigo-600/20 transition-all">Confirm Creation</button>
@@ -251,12 +251,12 @@ export default function Households() {
             {showJoin && (
               <div className="fixed inset-0 z-[110] flex items-center justify-center p-6 bg-black/80 backdrop-blur-sm">
                 <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-[#0f172a] border border-white/10 rounded-[2.5rem] p-12 max-w-md w-full shadow-2xl relative">
-                   <button onClick={() => setShowJoin(false)} className="absolute top-8 right-8 text-slate-500 hover:text-white"><XMarkIcon className="w-6 h-6" /></button>
+                   <button onClick={() => setShowJoin(false)} className="absolute top-8 right-8 text-white hover:text-white"><XMarkIcon className="w-6 h-6" /></button>
                    <h3 className="text-2xl font-bold text-white mb-2 uppercase tracking-tight">Join Household</h3>
-                   <p className="text-slate-500 text-sm mb-8 italic">Enter the unique code shared with you.</p>
+                   <p className="text-white text-sm mb-8 italic">Enter the unique code shared with you.</p>
                    <form onSubmit={handleJoin} className="space-y-6">
                       <div className="space-y-2">
-                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest px-1 italic">Invite Code</label>
+                        <label className="text-[10px] font-black text-white uppercase tracking-widest px-1 italic">Invite Code</label>
                         <input type="text" placeholder="PLACEHOLDER" value={form.inviteCode} onChange={e => setForm({...form, inviteCode: e.target.value.toUpperCase()})} className="w-full bg-white/5 border border-white/10 rounded-2xl py-5 px-8 text-white font-bold outline-none focus:border-indigo-500/50 tracking-[5px] text-center transition-all uppercase" required />
                       </div>
                       <button type="submit" className="w-full py-5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-bold shadow-xl shadow-indigo-600/20 transition-all">Join Team</button>

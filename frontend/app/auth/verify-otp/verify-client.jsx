@@ -171,7 +171,7 @@ export default function VerifyOtpClient() {
               {canResend ? (
                 <button onClick={handleResend} className="text-indigo-400 hover:text-indigo-300 transition-colors font-bold text-sm underline underline-offset-4 decoration-indigo-400/20 hover:decoration-indigo-400">{resending ? "Sending..." : "Resend Code"}</button>
               ) : (
-                 <div className="text-slate-500 text-xs font-medium">
+                 <div className="text-white text-xs font-medium">
                     Resend available in <span className="text-white font-bold">{countdown}s</span>
                  </div>
               )}

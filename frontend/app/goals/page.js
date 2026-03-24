@@ -87,15 +87,15 @@ export default function Goals() {
                    </h3>
                    <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-3 gap-6">
                       <div className="space-y-2">
-                        <label className="text-[11px] font-black text-slate-500 uppercase tracking-widest px-1">Goal Title</label>
+                        <label className="text-[11px] font-black text-white uppercase tracking-widest px-1">Goal Title</label>
                         <input className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-white text-sm font-bold placeholder:text-slate-700 outline-none focus:border-indigo-500/50 transition-all uppercase" type="text" placeholder="e.g. New Home, Car, Retirement..." value={form.title} onChange={e => setForm({...form, title: e.target.value})} required />
                       </div>
                       <div className="space-y-2">
-                        <label className="text-[11px] font-black text-slate-500 uppercase tracking-widest px-1">Target Amount (₹)</label>
+                        <label className="text-[11px] font-black text-white uppercase tracking-widest px-1">Target Amount (₹)</label>
                         <input className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-white text-sm font-bold placeholder:text-slate-700 outline-none focus:border-indigo-500/50 transition-all italic" type="number" placeholder="0.00" value={form.targetAmount} onChange={e => setForm({...form, targetAmount: e.target.value})} required />
                       </div>
                       <div className="space-y-2">
-                        <label className="text-[11px] font-black text-slate-500 uppercase tracking-widest px-1">Target Date</label>
+                        <label className="text-[11px] font-black text-white uppercase tracking-widest px-1">Target Date</label>
                         <input className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-white text-sm font-bold placeholder:text-slate-700 outline-none focus:border-indigo-500/50 transition-all cursor-pointer" type="date" value={form.deadline} onChange={e => setForm({...form, deadline: e.target.value})} />
                       </div>
                       <button type="submit" className="md:col-span-3 py-4 rounded-2xl bg-indigo-600 text-white font-bold transition-all shadow-xl shadow-indigo-600/10 hover:bg-indigo-500 mt-2">Deploy Goal</button>
@@ -125,15 +125,15 @@ export default function Goals() {
                   >
                      <div className="flex items-center justify-between gap-6 mb-10">
                         <div className="flex items-center gap-5">
-                           <div className={`w-14 h-14 rounded-2.5xl flex items-center justify-center transition-all duration-500 scale-100 group-hover:scale-110 ${isCompleted ? 'bg-emerald-500 text-white border border-emerald-400/20 shadow-xl shadow-emerald-500/20' : 'bg-white/5 text-slate-500 border border-white/10'}`}>
+                           <div className={`w-14 h-14 rounded-2.5xl flex items-center justify-center transition-all duration-500 scale-100 group-hover:scale-110 ${isCompleted ? 'bg-emerald-500 text-white border border-emerald-400/20 shadow-xl shadow-emerald-500/20' : 'bg-white/5 text-white border border-white/10'}`}>
                              {isCompleted ? <TrophyIcon className="w-7 h-7" /> : <FlagIcon className="w-7 h-7" />}
                            </div>
                            <div className="overflow-hidden">
                               <h4 className="text-base font-bold text-white tracking-tight uppercase leading-none truncate mb-1">{goal.title}</h4>
-                              <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest leading-none">{isCompleted ? 'Success' : 'In Progress'} – {percent.toFixed(0)}% Ready</p>
+                              <p className="text-[10px] font-black text-white uppercase tracking-widest leading-none">{isCompleted ? 'Success' : 'In Progress'} – {percent.toFixed(0)}% Ready</p>
                            </div>
                         </div>
-                        <button onClick={() => handleDelete(goal._id)} className="p-3 rounded-xl bg-white/5 text-slate-600 hover:bg-rose-500/20 hover:text-rose-400 border border-white/5 transition-all active:scale-[0.9]">
+                        <button onClick={() => handleDelete(goal._id)} className="p-3 rounded-xl bg-white/5 text-white hover:bg-rose-500/20 hover:text-rose-400 border border-white/5 transition-all active:scale-[0.9]">
                            <TrashIcon className="w-5 h-5" />
                         </button>
                      </div>
@@ -141,7 +141,7 @@ export default function Goals() {
                      <div className="space-y-6">
                         <div className="flex justify-between items-end">
                            <div className="space-y-1">
-                              <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest leading-none italic">Accumulated Savings</p>
+                              <p className="text-[10px] font-black text-white uppercase tracking-widest leading-none italic">Accumulated Savings</p>
                               <h3 className="text-2xl font-black italic leading-none text-white">₹{current.toLocaleString()} <span className="text-white/20 font-normal italic">/</span> ₹{target.toLocaleString()}</h3>
                            </div>
                            <p className={`text-[10px] font-black uppercase tracking-widest leading-none px-3 py-1.5 rounded-full border ${isCompleted ? 'bg-emerald-400/10 text-emerald-400 border-emerald-400/20' : 'bg-indigo-400/10 text-indigo-400 border-indigo-400/20'}`}>{percent.toFixed(0)}%</p>
@@ -155,8 +155,8 @@ export default function Goals() {
                         </div>
                         
                         <div className="flex items-center gap-2 py-1 bg-white/[0.02] rounded-xl px-4 border border-white/5">
-                           <CalendarDaysIcon className="w-4 h-4 text-slate-600" />
-                           <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest leading-none">
+                           <CalendarDaysIcon className="w-4 h-4 text-white" />
+                           <p className="text-[10px] font-bold text-white uppercase tracking-widest leading-none">
                               {goal.deadline ? `Target: ${new Date(goal.deadline).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}` : 'No deadline assigned'}
                            </p>
                         </div>
@@ -167,7 +167,7 @@ export default function Goals() {
               {goals.length === 0 && !loading && (
                  <div className="md:col-span-2 py-32 text-center bg-white/5 border border-dashed border-white/10 rounded-[2.5rem]">
                     <div className="w-16 h-16 rounded-3xl bg-white/5 flex items-center justify-center mx-auto mb-6"><TrophyIcon className="w-8 h-8 text-slate-700" /></div>
-                    <p className="text-sm font-bold text-slate-600 uppercase tracking-widest italic tracking-[3px]">Designate your first savings goal...</p>
+                    <p className="text-sm font-bold text-white uppercase tracking-widest italic tracking-[3px]">Designate your first savings goal...</p>
                  </div>
               )}
             </div>

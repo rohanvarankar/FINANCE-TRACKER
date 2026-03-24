@@ -111,11 +111,11 @@ function SignInContent() {
               </AnimatePresence>
 
               <div className="space-y-2">
-                <label className="text-[11px] font-black text-slate-500 uppercase tracking-widest px-1">Email Address</label>
+                <label className="text-[11px] font-black text-white uppercase tracking-widest px-1">Email Address</label>
                 <div className="relative">
-                  <EnvelopeIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 transition-colors" />
+                  <EnvelopeIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white transition-colors" />
                   <input 
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white placeholder:text-slate-600 outline-none focus:border-indigo-500/50 focus:bg-white/[0.07] transition-all font-medium" 
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white placeholder:text-white outline-none focus:border-indigo-500/50 focus:bg-white/[0.07] transition-all font-medium" 
                     type="email" 
                     placeholder="name@example.com" 
                     value={form.email} 
@@ -127,15 +127,15 @@ function SignInContent() {
 
               <div className="space-y-2">
                 <div className="flex justify-between items-center px-1">
-                  <label className="text-[11px] font-black text-slate-500 uppercase tracking-widest">Password</label>
+                  <label className="text-[11px] font-black text-white uppercase tracking-widest">Password</label>
                   <Link href="/auth/forgot-password" size="sm" className="text-[10px] font-bold text-indigo-400 hover:text-indigo-300 transition-colors">
                     Forgot Password?
                   </Link>
                 </div>
                 <div className="relative">
-                  <LockClosedIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 transition-colors" />
+                  <LockClosedIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white transition-colors" />
                   <input 
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white placeholder:text-slate-600 outline-none focus:border-indigo-500/50 focus:bg-white/[0.07] transition-all font-medium" 
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white placeholder:text-white outline-none focus:border-indigo-500/50 focus:bg-white/[0.07] transition-all font-medium" 
                     type="password" 
                     placeholder="••••••••" 
                     value={form.password} 
@@ -173,7 +173,7 @@ function SignInContent() {
         </div>
 
         <div className="mt-8 flex justify-center gap-6 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
-           <p className="text-[11px] text-slate-500 uppercase tracking-[4px] font-black">Encrypted • Private • Fast</p>
+           <p className="text-[11px] text-white uppercase tracking-[4px] font-black">Encrypted • Private • Fast</p>
         </div>
       </motion.div>
     </div>

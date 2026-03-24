@@ -161,7 +161,7 @@ export default function ChatbotBubble() {
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Ask for financial advice..." 
-                  className="w-full bg-white/5 border border-white/10 focus:border-indigo-500/60 rounded-2xl py-4 sm:py-4 pl-5 pr-14 text-sm font-medium text-white placeholder:text-slate-500 outline-none transition-all shadow-inner"
+                  className="w-full bg-white/5 border border-white/10 focus:border-indigo-500/60 rounded-2xl py-4 sm:py-4 pl-5 pr-14 text-sm font-medium text-white placeholder:text-white outline-none transition-all shadow-inner"
                 />
                 <button 
                   type="submit"

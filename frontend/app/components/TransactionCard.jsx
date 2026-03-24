@@ -44,7 +44,7 @@ export default function TransactionCard({ transaction, onDelete, onEdit, index }
             }`}>
               {tx.type === 'income' ? 'Income' : 'Expense'}
             </span>
-            <span className="text-[10px] font-bold text-slate-500 tracking-tight">{date}</span>
+            <span className="text-[10px] font-bold text-white tracking-tight">{date}</span>
           </div>
           <h4 className="text-sm sm:text-base font-bold text-white tracking-tight leading-none truncate w-40 sm:w-64">
             {tx.description || "Unlabeled Entry"}
@@ -58,7 +58,7 @@ export default function TransactionCard({ transaction, onDelete, onEdit, index }
              {isIncome ? "+" : "-"}₹{Number(tx.amount).toLocaleString()}
            </p>
            {tx.categoryId?.name && (
-              <p className="text-[10px] font-bold text-slate-600 tracking-widest mt-1 uppercase">
+              <p className="text-[10px] font-bold text-white tracking-widest mt-1 uppercase">
                  {tx.categoryId.name}
               </p>
            )}
@@ -67,13 +67,13 @@ export default function TransactionCard({ transaction, onDelete, onEdit, index }
         <div className="flex gap-2">
            <button 
               onClick={() => onEdit && onEdit(tx)}
-              className="p-3 rounded-xl bg-white/5 hover:bg-white/10 text-slate-500 hover:text-white border border-white/5 transition-all active:scale-95"
+              className="p-3 rounded-xl bg-white/5 hover:bg-white/10 text-white hover:text-white border border-white/5 transition-all active:scale-95"
            >
               <PencilSquareIcon className="w-4 h-4 sm:w-5 sm:h-5" />
            </button>
            <button 
               onClick={() => onDelete && onDelete(tx._id)}
-              className="p-3 rounded-xl bg-white/5 hover:bg-rose-500/20 text-slate-500 hover:text-rose-400 border border-white/5 transition-all active:scale-95"
+              className="p-3 rounded-xl bg-white/5 hover:bg-rose-500/20 text-white hover:text-rose-400 border border-white/5 transition-all active:scale-95"
            >
               <TrashIcon className="w-4 h-4 sm:w-5 sm:h-5" />
            </button>

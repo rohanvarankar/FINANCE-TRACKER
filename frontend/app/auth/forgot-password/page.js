@@ -98,12 +98,12 @@ export default function ForgotPasswordPage() {
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
-                <label className="text-[11px] font-black text-slate-500 uppercase tracking-widest px-1">Email Address</label>
+                <label className="text-[11px] font-black text-white uppercase tracking-widest px-1">Email Address</label>
                 <div className="relative">
-                  <EnvelopeIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 transition-colors" />
+                  <EnvelopeIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white transition-colors" />
                   <input
                     type="email" placeholder="name@example.com" required
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white placeholder:text-slate-600 outline-none focus:border-indigo-500/50 focus:bg-white/[0.07] transition-all font-medium"
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white placeholder:text-white outline-none focus:border-indigo-500/50 focus:bg-white/[0.07] transition-all font-medium"
                     value={email} onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
@@ -124,7 +124,7 @@ export default function ForgotPasswordPage() {
               </button>
             </form>
 
-            <div className="mt-8 pt-6 border-t border-white/5 text-center text-slate-500 text-xs font-medium">
+            <div className="mt-8 pt-6 border-t border-white/5 text-center text-white text-xs font-medium">
                 Remembered your password? 
                 <Link href="/auth/signin" className="text-indigo-400 hover:text-indigo-300 transition-colors ml-2 font-bold underline underline-offset-4 decoration-indigo-400/20">Sign In</Link>
             </div>

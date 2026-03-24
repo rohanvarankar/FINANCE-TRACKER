@@ -141,7 +141,7 @@ export default function ExportManager({ open, onClose, summary }) {
              </div>
              <h2 className="text-2xl font-black text-white italic tracking-tight uppercase">Export Engine</h2>
           </div>
-          <button onClick={onClose} className="p-2.5 rounded-2xl bg-white/5 text-slate-500 hover:text-white transition-all">
+          <button onClick={onClose} className="p-2.5 rounded-2xl bg-white/5 text-white hover:text-white transition-all">
              <XMarkIcon className="w-6 h-6" />
           </button>
         </div>
@@ -183,12 +183,12 @@ function ExportOption({ icon, title, description, onClick, loading }) {
       disabled={loading}
       className="w-full p-6 bg-white/[0.03] border border-white/5 rounded-[2rem] hover:bg-indigo-600/10 hover:border-indigo-500/30 transition-all flex items-center gap-5 text-left group disabled:opacity-50"
     >
-      <div className="w-14 h-14 rounded-2.5xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-500 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-500">
+      <div className="w-14 h-14 rounded-2.5xl bg-white/5 border border-white/10 flex items-center justify-center text-white group-hover:bg-indigo-600 group-hover:text-white transition-all duration-500">
         {icon}
       </div>
       <div>
         <h4 className="text-sm font-bold text-white uppercase tracking-tight mb-0.5">{title}</h4>
-        <p className="text-[11px] font-medium text-slate-500 leading-tight">{description}</p>
+        <p className="text-[11px] font-medium text-white leading-tight">{description}</p>
       </div>
       <div className="ml-auto opacity-0 group-hover:opacity-100 transition-all">
         <ArrowDownTrayIcon className="w-5 h-5 text-indigo-400" />

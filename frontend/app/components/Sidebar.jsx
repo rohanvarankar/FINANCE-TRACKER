@@ -71,7 +71,7 @@ export default function Sidebar({ open, onClose, onLogout }) {
             </div>
             <button 
               onClick={onClose}
-              className="md:hidden p-2 rounded-xl text-slate-500 hover:text-white hover:bg-white/5 transition-all"
+              className="md:hidden p-2 rounded-xl text-white hover:text-white hover:bg-white/5 transition-all"
             >
               <XMarkIcon className="w-6 h-6" />
             </button>
@@ -80,7 +80,7 @@ export default function Sidebar({ open, onClose, onLogout }) {
           <div className="flex-1 px-6 space-y-10 overflow-y-auto pt-4 selection:bg-indigo-500/30">
             
             <div className="space-y-2">
-              <p className="px-4 text-[10px] font-black text-slate-600 uppercase tracking-widest mb-4 italic">Workspace Control</p>
+              <p className="px-4 text-[10px] font-black text-white uppercase tracking-widest mb-4 italic">Workspace Control</p>
               {navItems.map((item) => {
                 const active = pathname === item.href;
                 return (
@@ -92,11 +92,11 @@ export default function Sidebar({ open, onClose, onLogout }) {
                       group flex items-center gap-4 px-4 py-4 rounded-2xl transition-all duration-300
                       ${active 
                         ? "bg-indigo-600 text-white shadow-xl shadow-indigo-600/20 scale-[1.02] border border-indigo-400/20" 
-                        : "hover:bg-white/5 text-slate-500 hover:text-white"
+                        : "hover:bg-white/5 text-white hover:text-white"
                       }
                     `}
                   >
-                    <item.Icon className={`w-5.5 h-5.5 transition-transform group-hover:scale-110 ${active ? "text-white" : "text-slate-600"}`} />
+                    <item.Icon className={`w-5.5 h-5.5 transition-transform group-hover:scale-110 ${active ? "text-white" : "text-white"}`} />
                     <span className="text-sm font-bold tracking-tight">{item.name}</span>
                     {active && (
                        <motion.div layoutId="sidebar-active" className="ml-auto w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_10px_white]" />
@@ -107,7 +107,7 @@ export default function Sidebar({ open, onClose, onLogout }) {
             </div>
 
             <div className="space-y-2">
-              <p className="px-4 text-[10px] font-black text-slate-600 uppercase tracking-widest mb-4 italic">System Registry</p>
+              <p className="px-4 text-[10px] font-black text-white uppercase tracking-widest mb-4 italic">System Registry</p>
               {secondaryItems.map((item) => {
                 const active = pathname === item.href;
                 return (
@@ -119,11 +119,11 @@ export default function Sidebar({ open, onClose, onLogout }) {
                       group flex items-center gap-4 px-4 py-4 rounded-2xl transition-all duration-300
                       ${active 
                         ? "bg-white/10 text-white shadow-xl border border-white/10" 
-                        : "hover:bg-white/5 text-slate-500 hover:text-white"
+                        : "hover:bg-white/5 text-white hover:text-white"
                       }
                     `}
                   >
-                    <item.Icon className={`w-5.5 h-5.5 transition-transform group-hover:scale-110 ${active ? "text-white" : "text-slate-600"}`} />
+                    <item.Icon className={`w-5.5 h-5.5 transition-transform group-hover:scale-110 ${active ? "text-white" : "text-white"}`} />
                     <span className="text-sm font-bold tracking-tight">{item.name}</span>
                   </Link>
                 );
@@ -139,7 +139,7 @@ export default function Sidebar({ open, onClose, onLogout }) {
                   </div>
                   <div>
                     <p className="text-xs font-bold text-white leading-none mb-1">Session Secured</p>
-                    <p className="text-[10px] font-medium text-slate-500 italic">Financial Link Active</p>
+                    <p className="text-[10px] font-medium text-white italic">Financial Link Active</p>
                   </div>
                </div>
             </div>
@@ -148,7 +148,7 @@ export default function Sidebar({ open, onClose, onLogout }) {
               onClick={() => { onLogout(); onClose(); }}
               className="
                 w-full flex items-center gap-3 px-6 py-4 rounded-2xl 
-                text-[13px] font-bold text-slate-500 hover:text-white hover:bg-rose-500/80
+                text-[13px] font-bold text-white hover:text-white hover:bg-rose-500/80
                 border border-white/5 hover:border-rose-400/40 
                 transition-all duration-300 shadow-sm active:scale-95 group
               "

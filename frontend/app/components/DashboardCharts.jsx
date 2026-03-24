@@ -17,7 +17,7 @@ const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-[#0f172a] p-4 rounded-2xl border border-white/10 shadow-2xl backdrop-blur-xl">
-        <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">{label}</p>
+        <p className="text-[10px] font-black text-white uppercase tracking-widest mb-1">{label}</p>
         <p className="text-lg font-black text-white">₹{payload[0].value.toLocaleString()}</p>
       </div>
     );

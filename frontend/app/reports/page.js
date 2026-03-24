@@ -91,7 +91,7 @@ export default function Reports() {
             <motion.div initial={{ opacity:0, y: 10 }} animate={{ opacity:1, y: 0 }} className="bg-white/[0.03] backdrop-blur-2xl border border-white/10 rounded-[2.5rem] p-8 flex items-center gap-6 group hover:border-white/20 transition-all">
               <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white shadow-xl group-hover:scale-110 transition-transform duration-500"><WalletIcon className="w-7 h-7" /></div>
               <div>
-                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 italic leading-none">Net Equity</p>
+                <p className="text-[10px] font-bold text-white uppercase tracking-widest mb-1 italic leading-none">Net Equity</p>
                 <h3 className="text-2xl font-black italic text-white">₹{(summary.balance || 0).toLocaleString()}</h3>
               </div>
             </motion.div>
@@ -99,7 +99,7 @@ export default function Reports() {
             <motion.div initial={{ opacity:0, y: 10 }} animate={{ opacity:1, y: 0 }} transition={{ delay: 0.1 }} className="bg-indigo-600/10 backdrop-blur-2xl border border-indigo-500/20 rounded-[2.5rem] p-8 flex items-center gap-6 group hover:border-indigo-500/40 transition-all">
               <div className="w-14 h-14 rounded-2xl bg-indigo-600 flex items-center justify-center text-white shadow-xl shadow-indigo-600/20 group-hover:scale-110 transition-transform duration-500"><ArrowTrendingUpIcon className="w-7 h-7" /></div>
               <div>
-                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 italic leading-none">Total Income</p>
+                <p className="text-[10px] font-bold text-white uppercase tracking-widest mb-1 italic leading-none">Total Income</p>
                 <h3 className="text-2xl font-black italic text-white">+₹{(summary.totalIncome || 0).toLocaleString()}</h3>
               </div>
             </motion.div>
@@ -107,7 +107,7 @@ export default function Reports() {
             <motion.div initial={{ opacity:0, y: 10 }} animate={{ opacity:1, y: 0 }} transition={{ delay: 0.2 }} className="bg-rose-600/10 backdrop-blur-2xl border border-rose-500/20 rounded-[2.5rem] p-8 flex items-center gap-6 group hover:border-rose-500/40 transition-all sm:col-span-2 lg:col-span-1">
               <div className="w-14 h-14 rounded-2xl bg-rose-500 flex items-center justify-center text-white shadow-xl shadow-rose-500/20 group-hover:scale-110 transition-transform duration-500"><ArrowTrendingDownIcon className="w-7 h-7" /></div>
               <div>
-                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 italic leading-none">Total Expense</p>
+                <p className="text-[10px] font-bold text-white uppercase tracking-widest mb-1 italic leading-none">Total Expense</p>
                 <h3 className="text-2xl font-black italic text-white">-₹{(summary.totalExpense || 0).toLocaleString()}</h3>
               </div>
             </motion.div>
@@ -123,7 +123,7 @@ export default function Reports() {
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-8 mb-12 relative z-10">
                    <div className="space-y-1">
                       <h3 className="text-xl font-bold text-white uppercase tracking-tight">Active Cash Flow</h3>
-                      <p className="text-xs font-medium text-slate-500">Visualization of income vs consumption trajectory</p>
+                      <p className="text-xs font-medium text-white">Visualization of income vs consumption trajectory</p>
                    </div>
                    <div className="bg-emerald-500/10 text-emerald-400 px-5 py-2.5 rounded-2xl text-[10px] font-black border border-emerald-500/20 flex items-center gap-2">
                        <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" /> Live Analysis Active
@@ -196,7 +196,7 @@ export default function Reports() {
                      {!aiAdvice && !aiLoading && (
                         <div className="flex items-center gap-4 px-2">
                            <div className="w-11 h-11 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 font-black italic shadow-lg shadow-indigo-600/5">!</div>
-                           <p className="text-[10px] font-bold text-slate-600 uppercase tracking-widest">Connect your Gemini API Key for live insights.</p>
+                           <p className="text-[10px] font-bold text-white uppercase tracking-widest">Connect your Gemini API Key for live insights.</p>
                         </div>
                      )}
                   </div>

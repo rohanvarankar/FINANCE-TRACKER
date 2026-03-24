@@ -10,6 +10,9 @@ import AppBackground from "../components/AppBackground";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChartPieIcon, TrashIcon, PlusIcon, SparklesIcon, ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
+// Helper: get current month as "YYYY-MM"
+const getCurrentMonth = () => new Date().toISOString().slice(0, 7);
+
 export default function Budgets() {
   const router = useRouter();
   const [budgets, setBudgets] = useState([]);
@@ -17,7 +20,9 @@ export default function Budgets() {
   const [loading, setLoading] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showForm, setShowForm] = useState(false);
-  const [form, setForm] = useState({ categoryId: "", amount: "", period: "monthly" });
+
+  // FIX: replaced "period" with "month" to match backend expectation
+  const [form, setForm] = useState({ categoryId: "", amount: "", month: getCurrentMonth() });
 
   const fetchData = async () => {
     try {
@@ -38,8 +43,9 @@ export default function Budgets() {
     e.preventDefault();
     try {
       const token = getToken();
+      // FIX: now sends { categoryId, amount, month } — exactly what backend requires
       await api.post("/budgets/add", form, { headers: { Authorization: `Bearer ${token}` } });
-      setForm({ categoryId: "", amount: "", period: "monthly" });
+      setForm({ categoryId: "", amount: "", month: getCurrentMonth() });
       setShowForm(false);
       fetchData();
     } catch (err) { alert("Budget failed"); }
@@ -70,7 +76,7 @@ export default function Budgets() {
                  <span className="text-[10px] font-black text-indigo-400 uppercase tracking-[4px]">Verified Active Session</span>
               </div>
               <h1 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight">Budgets</h1>
-              <p className="text-slate-400 font-medium text-sm">Monitor and manage your spending limits.</p>
+              <p className="text-white font-medium text-sm">Monitor and manage your spending limits.</p>
             </div>
             
             <motion.button 
@@ -92,23 +98,44 @@ export default function Budgets() {
                    </h3>
                    <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-3 gap-6">
                       <div className="space-y-2">
-                        <label className="text-[11px] font-black text-slate-500 uppercase tracking-widest px-1">Select Category</label>
-                        <select className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-white font-medium placeholder:text-slate-700 outline-none focus:border-indigo-500/50 appearance-none bg-[#0f172a] transition-all cursor-pointer" value={form.categoryId} onChange={e => setForm({...form, categoryId: e.target.value})} required>
-                            <option value="">Select pool</option>
-                            {categories.map(c => <option key={c._id} value={c._id} className="text-white">{c.name}</option>)}
+                        <label className="text-[11px] font-black text-white uppercase tracking-widest px-1">Select Category</label>
+                        <select
+                          className="w-full bg-[#0f172a] border border-white/10 rounded-2xl py-4 px-6 text-white font-medium outline-none focus:border-indigo-500/50 appearance-none transition-all cursor-pointer"
+                          value={form.categoryId}
+                          onChange={e => setForm({...form, categoryId: e.target.value})}
+                          required
+                        >
+                            <option value="" className="bg-[#0f172a] text-white">Select pool</option>
+                            {categories.map(c => (
+                              <option key={c._id} value={c._id} className="bg-[#0f172a] text-white">{c.name}</option>
+                            ))}
                         </select>
                       </div>
+
                       <div className="space-y-2">
-                        <label className="text-[11px] font-black text-slate-500 uppercase tracking-widest px-1">Limit (₹)</label>
-                        <input className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-white text-sm font-bold placeholder:text-slate-700 outline-none focus:border-indigo-500/50 transition-all italic" type="number" placeholder="0.00" value={form.amount} onChange={e => setForm({...form, amount: e.target.value})} required />
+                        <label className="text-[11px] font-black text-white uppercase tracking-widest px-1">Limit (₹)</label>
+                        <input
+                          className="w-full bg-[#0f172a] border border-white/10 rounded-2xl py-4 px-6 text-white text-sm font-bold placeholder:text-slate-400 outline-none focus:border-indigo-500/50 transition-all italic"
+                          type="number"
+                          placeholder="0.00"
+                          value={form.amount}
+                          onChange={e => setForm({...form, amount: e.target.value})}
+                          required
+                        />
                       </div>
+
+                      {/* FIX: replaced "Reset Cycle / period" with "Month" picker matching backend */}
                       <div className="space-y-2">
-                        <label className="text-[11px] font-black text-slate-500 uppercase tracking-widest px-1">Reset Cycle</label>
-                        <select className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-white font-medium placeholder:text-slate-700 outline-none focus:border-indigo-500/50 appearance-none bg-[#0f172a] transition-all cursor-pointer" value={form.period} onChange={e => setForm({...form, period: e.target.value})}>
-                            <option value="monthly">Monthly Reset</option>
-                            <option value="yearly">Annual Reset</option>
-                        </select>
+                        <label className="text-[11px] font-black text-white uppercase tracking-widest px-1">Month</label>
+                        <input
+                          className="w-full bg-[#0f172a] border border-white/10 rounded-2xl py-4 px-6 text-white text-sm font-bold outline-none focus:border-indigo-500/50 transition-all"
+                          type="month"
+                          value={form.month}
+                          onChange={e => setForm({...form, month: e.target.value})}
+                          required
+                        />
                       </div>
+
                       <button type="submit" className="md:col-span-3 py-4 rounded-2xl bg-indigo-600 text-white font-bold transition-all shadow-xl shadow-indigo-600/10 hover:bg-indigo-500 mt-2">Deploy Plan</button>
                    </form>
                 </div>
@@ -136,15 +163,15 @@ export default function Budgets() {
                   >
                      <div className="flex items-center justify-between gap-6 mb-10">
                         <div className="flex items-center gap-5">
-                           <div className="w-14 h-14 rounded-2.5xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-500 transition-all duration-500 group-hover:scale-110 group-hover:bg-indigo-600 group-hover:text-white group-hover:border-indigo-400 group-hover:shadow-xl group-hover:shadow-indigo-600/20">
+                           <div className="w-14 h-14 rounded-2.5xl bg-white/5 border border-white/10 flex items-center justify-center text-white transition-all duration-500 group-hover:scale-110 group-hover:bg-indigo-600 group-hover:text-white group-hover:border-indigo-400 group-hover:shadow-xl group-hover:shadow-indigo-600/20">
                              <ChartPieIcon className="w-7 h-7" />
                            </div>
                            <div className="overflow-hidden">
                               <h4 className="text-base font-bold text-white tracking-tight uppercase leading-none truncate mb-1">{budget.categoryId?.name || "Global Plan"}</h4>
-                              <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">{budget.period} Cycle Status</p>
+                              <p className="text-[10px] font-black text-white uppercase tracking-widest">{budget.month} Cycle Status</p>
                            </div>
                         </div>
-                        <button onClick={() => handleDelete(budget._id)} className="p-3 rounded-xl bg-white/5 text-slate-600 hover:bg-rose-500/20 hover:text-rose-400 border border-white/5 transition-all active:scale-[0.9]">
+                        <button onClick={() => handleDelete(budget._id)} className="p-3 rounded-xl bg-white/5 text-white hover:bg-rose-500/20 hover:text-rose-400 border border-white/5 transition-all active:scale-[0.9]">
                            <TrashIcon className="w-5 h-5" />
                         </button>
                      </div>
@@ -152,7 +179,7 @@ export default function Budgets() {
                      <div className="space-y-6">
                         <div className="flex justify-between items-end">
                            <div className="space-y-1">
-                              <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest leading-none italic">Total Consumption</p>
+                              <p className="text-[10px] font-black text-white uppercase tracking-widest leading-none italic">Total Consumption</p>
                               <h3 className={`text-2xl font-black italic leading-none ${isOver ? 'text-rose-400' : 'text-white'}`}>₹{spending.toLocaleString()} <span className="text-white/20 font-normal italic">/</span> ₹{limit.toLocaleString()}</h3>
                            </div>
                            <p className={`text-[10px] font-black uppercase tracking-widest leading-none px-3 py-1.5 rounded-full border ${isOver ? 'bg-rose-400/10 text-rose-400 border-rose-400/20' : 'bg-indigo-400/10 text-indigo-400 border-indigo-400/20'}`}>{percent.toFixed(0)}%</p>
@@ -175,8 +202,8 @@ export default function Budgets() {
               })}
               {budgets.length === 0 && !loading && (
                  <div className="md:col-span-2 py-32 text-center bg-white/5 border border-dashed border-white/10 rounded-[2.5rem]">
-                    <div className="w-16 h-16 rounded-3xl bg-white/5 flex items-center justify-center mx-auto mb-6"><ChartPieIcon className="w-8 h-8 text-slate-700" /></div>
-                    <p className="text-sm font-bold text-slate-600 uppercase tracking-widest italic tracking-[3px]">Assign your first budget plan...</p>
+                    <div className="w-16 h-16 rounded-3xl bg-white/5 flex items-center justify-center mx-auto mb-6"><ChartPieIcon className="w-8 h-8 text-white" /></div>
+                    <p className="text-sm font-bold text-white uppercase tracking-widest italic tracking-[3px]">Assign your first budget plan...</p>
                  </div>
               )}
             </div>
