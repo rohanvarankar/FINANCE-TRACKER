@@ -31,27 +31,6 @@
 
 </div>
 
----
-
-## 📸 Screenshots
-
-> Add your actual screenshots by replacing the placeholders below.  
-> Tip: Use [screely.com](https://screely.com) to make them look polished with a browser frame.
-
-<br/>
-
-| Dashboard | AI Chatbot | Transactions |
-|:---------:|:----------:|:------------:|
-| ![Dashboard](https://placehold.co/380x220/1e1b4b/a5b4fc?text=Dashboard+View&font=montserrat) | ![Chatbot](https://placehold.co/380x220/1e1b4b/a5b4fc?text=AI+Chatbot&font=montserrat) | ![Transactions](https://placehold.co/380x220/1e1b4b/a5b4fc?text=Transactions&font=montserrat) |
-
-| Budgets & Goals | Household Sharing | Mobile View |
-|:-----------:|:------------:|:----------:|
-| ![Budgets](https://placehold.co/380x220/1e1b4b/a5b4fc?text=Budgets+%26+Goals&font=montserrat) | ![Household](https://placehold.co/380x220/1e1b4b/a5b4fc?text=Household+Sharing&font=montserrat) | ![Mobile](https://placehold.co/380x220/1e1b4b/a5b4fc?text=Mobile+View&font=montserrat) |
-
-<br/>
-
----
-
 ## ✨ Feature Highlights
 
 <br/>
