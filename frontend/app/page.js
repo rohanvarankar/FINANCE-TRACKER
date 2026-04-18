@@ -8,21 +8,27 @@ import InstallPrompt from "../components/InstallPrompt";
 
 // ── Notification helper (inline — no external util needed) ──────────────────
 async function requestNotificationPermission() {
+  if (typeof window === "undefined") return;
+
   if (!("Notification" in window)) {
     alert("This browser does not support notifications.");
     return;
   }
+
   if (Notification.permission === "granted") {
     alert("Notifications are already enabled!");
     return;
   }
+
   if (Notification.permission === "denied") {
     alert(
       "Notifications are blocked. Please enable them in your browser settings.",
     );
     return;
   }
+
   const permission = await Notification.requestPermission();
+
   if (permission === "granted") {
     new Notification("TrackFin 🎉", {
       body: "Notifications enabled! We'll keep you updated.",
@@ -266,9 +272,15 @@ export default function Home() {
   const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll);
-    if ("Notification" in window) setNotifPerm(Notification.permission);
+
+    if ("Notification" in window) {
+      setNotifPerm(Notification.permission);
+    }
+
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
