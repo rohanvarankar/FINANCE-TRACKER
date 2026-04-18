@@ -6,38 +6,20 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import InstallPrompt from "../components/InstallPrompt";
 
-// ── Notification helper (inline — no external util needed) ──────────────────
 async function requestNotificationPermission() {
   if (typeof window === "undefined") return;
-
-  if (!("Notification" in window)) {
-    alert("This browser does not support notifications.");
-    return;
-  }
-
-  if (Notification.permission === "granted") {
-    alert("Notifications are already enabled!");
-    return;
-  }
-
-  if (Notification.permission === "denied") {
-    alert(
-      "Notifications are blocked. Please enable them in your browser settings.",
-    );
-    return;
-  }
-
+  if (!("Notification" in window)) return;
+  if (Notification.permission === "granted") return;
+  if (Notification.permission === "denied") return;
   const permission = await Notification.requestPermission();
-
   if (permission === "granted") {
     new Notification("TrackFin 🎉", {
-      body: "Notifications enabled! We'll keep you updated.",
+      body: "Notifications enabled!",
       icon: "/icons/icon-192.png",
     });
   }
 }
 
-// ── Animated counter ─────────────────────────────────────────────────────────
 function AnimatedCounter({ end, suffix = "", prefix = "", duration = 2.5 }) {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
@@ -65,7 +47,6 @@ function AnimatedCounter({ end, suffix = "", prefix = "", duration = 2.5 }) {
   );
 }
 
-// ── Floating particles ────────────────────────────────────────────────────────
 function Particles() {
   const [mounted, setMounted] = useState(false);
   const [particles, setParticles] = useState([]);
@@ -84,13 +65,10 @@ function Particles() {
     );
   }, []);
 
-  if (!mounted)
-    return (
-      <div className="absolute inset-0 overflow-hidden pointer-events-none" />
-    );
+  if (!mounted) return null;
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    <div className="absolute inset-0 pointer-events-none">
       {particles.map((p) => (
         <motion.div
           key={p.id}
@@ -114,7 +92,6 @@ function Particles() {
   );
 }
 
-// ── Constants ─────────────────────────────────────────────────────────────────
 const NAV_LINKS = ["Features", "Preview", "How It Works", "Reviews"];
 
 const FEATURES = [
@@ -233,54 +210,42 @@ const REVIEWS = [
   },
 ];
 
-// ── Page ──────────────────────────────────────────────────────────────────────
 export default function Home() {
   const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [notifPerm, setNotifPerm] = useState("default");
-
   const [checkingAuth, setCheckingAuth] = useState(true);
 
-  useEffect(() => {
-    // 🔥 AUTH CHECK (MAIN FIX)
-    const token = localStorage.getItem("accessToken");
-
-    if (token) {
-      router.replace("/dashboard"); // redirect if already logged in
-    } else {
-      setCheckingAuth(false); // allow page render
-    }
-  }, [router]);
-
-  // ⛔ Prevent flicker (VERY IMPORTANT)
-  if (checkingAuth) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[#060b18] text-white">
-        <div className="w-8 h-8 border-2 border-teal-400 border-t-transparent rounded-full animate-spin"></div>
-      </div>
-    );
-  }
-
-  // Track whether the install banner is visible so we can push the navbar down
-
   const heroRef = useRef(null);
+  const [heroReady, setHeroReady] = useState(false);
+
+  useEffect(() => {
+    if (heroRef.current) setHeroReady(true);
+  }, []);
+
   const { scrollYProgress } = useScroll({
-    target: heroRef,
+    target: heroReady ? heroRef : undefined,
     offset: ["start start", "end start"],
   });
+
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      router.replace("/dashboard");
+    } else {
+      setCheckingAuth(false);
+    }
+  }, [router]);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll);
-
-    if ("Notification" in window) {
-      setNotifPerm(Notification.permission);
-    }
-
+    if ("Notification" in window) setNotifPerm(Notification.permission);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
@@ -290,25 +255,25 @@ export default function Home() {
   };
 
   const scrollTo = (id) => {
+    if (typeof document === "undefined") return;
     document
       .getElementById(id.toLowerCase().replace(/ /g, "-"))
       ?.scrollIntoView({ behavior: "smooth" });
   };
 
-  /*
-    Banner heights:
-      mobile  (< sm)  ≈ 112 px
-      tablet  (sm-lg) ≈  56 px
-      desktop (≥ lg)  ≈  56 px
-    Navbar height: 80 px (h-20)
-    So when banner is visible the navbar top offset equals the banner height.
-  */
+  if (checkingAuth) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#060b18] text-white">
+        <div className="w-8 h-8 border-2 border-teal-400 border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#060b18] text-white overflow-x-hidden font-sans">
       <InstallPrompt />
 
-      {/* ── NAVBAR — offset downward when banner is showing ────────────── */}
+      {/* ── NAVBAR ─────────────────────────────────────────────────── */}
       <nav
         className={`fixed left-0 right-0 z-50 transition-all duration-300 top-0 ${
           scrolled
@@ -317,7 +282,6 @@ export default function Home() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 flex items-center justify-between h-16 sm:h-20">
-          {/* Logo */}
           <div className="flex items-center gap-2">
             <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center font-bold text-white shadow-lg shadow-teal-500/40 text-sm sm:text-base">
               ₹
@@ -327,7 +291,6 @@ export default function Home() {
             </span>
           </div>
 
-          {/* Nav links — hidden on mobile */}
           <div className="hidden md:flex items-center gap-6 lg:gap-8 text-sm font-medium text-slate-400">
             {NAV_LINKS.map((l) => (
               <button
@@ -340,9 +303,7 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Right: bell + sign in + CTA */}
           <div className="flex items-center gap-2 sm:gap-3">
-            {/* Notification bell */}
             <button
               onClick={handleNotification}
               title={
@@ -362,7 +323,6 @@ export default function Home() {
             >
               {notifPerm === "denied" ? "🔕" : "🔔"}
             </button>
-
             <button
               onClick={() => router.push("/auth/signin")}
               className="hidden md:block text-sm text-slate-300 hover:text-white transition"
@@ -379,10 +339,10 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* ── HERO ─────────────────────────────────────────────────────────── */}
+      {/* ── HERO ───────────────────────────────────────────────────── */}
       <section
         ref={heroRef}
-        className={`relative min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-6 pt-28 transition-all duration-300`}
+        className="relative min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-6 pt-28"
       >
         <Particles />
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] sm:w-[800px] h-[400px] sm:h-[600px] bg-teal-500/5 rounded-full blur-[150px] pointer-events-none" />
@@ -420,7 +380,6 @@ export default function Home() {
           </div>
         </motion.div>
 
-        {/* Hero dashboard image */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
@@ -441,7 +400,7 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* ── STATS ────────────────────────────────────────────────────────── */}
+      {/* ── STATS ──────────────────────────────────────────────────── */}
       <section className="py-16 sm:py-20 bg-white/[0.01] border-y border-white/5">
         <div className="max-w-5xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center uppercase tracking-widest">
           {[
@@ -460,7 +419,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── FEATURES ─────────────────────────────────────────────────────── */}
+      {/* ── FEATURES ───────────────────────────────────────────────── */}
       <section
         id="features"
         className="py-20 sm:py-24 px-4 sm:px-6 max-w-7xl mx-auto"
@@ -495,7 +454,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── HOW IT WORKS ─────────────────────────────────────────────────── */}
+      {/* ── HOW IT WORKS ───────────────────────────────────────────── */}
       <section
         id="how-it-works"
         className="py-20 sm:py-24 px-4 sm:px-6 max-w-7xl mx-auto"
@@ -538,7 +497,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── PREVIEW ──────────────────────────────────────────────────────── */}
+      {/* ── PREVIEW ────────────────────────────────────────────────── */}
       <section
         id="preview"
         className="py-20 sm:py-24 px-4 sm:px-6 max-w-7xl mx-auto space-y-20 sm:space-y-32"
@@ -574,7 +533,7 @@ export default function Home() {
         ))}
       </section>
 
-      {/* ── TESTIMONIALS ─────────────────────────────────────────────────── */}
+      {/* ── TESTIMONIALS ───────────────────────────────────────────── */}
       <section
         id="reviews"
         className="py-20 sm:py-24 px-4 sm:px-6 max-w-7xl mx-auto text-center"
@@ -607,7 +566,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── FINAL CTA ────────────────────────────────────────────────────── */}
+      {/* ── FINAL CTA ──────────────────────────────────────────────── */}
       <section className="py-20 sm:py-24 px-4 sm:px-6 text-center">
         <div className="max-w-4xl mx-auto rounded-3xl sm:rounded-[3.5rem] bg-teal-500 p-10 sm:p-16 md:p-24 shadow-2xl shadow-teal-500/20">
           <h2 className="text-3xl sm:text-4xl md:text-6xl font-black italic tracking-tighter uppercase mb-4 sm:mb-6">
@@ -625,7 +584,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── FOOTER ───────────────────────────────────────────────────────── */}
+      {/* ── FOOTER ─────────────────────────────────────────────────── */}
       <footer className="py-8 sm:py-10 border-t border-white/5 text-center text-white text-[10px] font-bold uppercase tracking-widest px-4">
         © {new Date().getFullYear()} TrackFin — Your Financial Engine. Built
         with ❤️ in India.

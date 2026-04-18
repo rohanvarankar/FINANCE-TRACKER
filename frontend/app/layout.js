@@ -15,7 +15,10 @@ export const metadata = {
   title: "TrackFin",
   description: "AI Finance Tracker",
   manifest: "/manifest.json",
-  themeColor: [{ color: "#060b18" }],
+};
+
+export const viewport = {
+  themeColor: "#0f172a",
 };
 
 export default function RootLayout({ children }) {
@@ -44,9 +47,7 @@ export default function RootLayout({ children }) {
       <body
         className={`h-full ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="min-h-screen w-full">
-          {children}
-        </div>
+        <div className="min-h-screen w-full">{children}</div>
       </body>
     </html>
   );
