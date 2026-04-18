@@ -214,7 +214,14 @@ export default function Dashboard() {
       <Sidebar
         open={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
-        onLogout={() => router.push("/auth/signin")}
+        onLogout={() => {
+          // 🔥 Clear tokens
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+
+          // Redirect
+          router.replace("/auth/signin");
+        }}
       />
 
       <div className="flex-1 flex flex-col md:ml-72 relative z-10 min-w-0 transition-all">
