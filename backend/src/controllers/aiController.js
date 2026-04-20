@@ -120,7 +120,7 @@ exports.getAdvisorInsight = async (req, res) => {
 // ✅ UPDATED — profanity + finance topic filters added
 exports.getChatbotResponse = async (req, res) => {
   try {
-    const { message, history } = req.body;
+    const { message, history = [] } = req.body;
     const userId = req.user.userId;
     const apiKey = process.env.GROQ_API_KEY || process.env.GOOGLE_GEMINI_API_KEY;
 

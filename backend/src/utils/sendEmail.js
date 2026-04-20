@@ -1,52 +1,82 @@
 require("dotenv").config();
+const nodemailer = require("nodemailer");
 
+/**
+ * Sends an email using nodemailer.
+ * Falls back to the Vercel gateway if nodemailer fails or if env is configured for it.
+ */
 async function sendEmail(to, subject, text, html) {
+  const EMAIL_USER = process.env.EMAIL_USER;
+  const EMAIL_PASS = process.env.EMAIL_PASS;
+
+  if (!EMAIL_USER || !EMAIL_PASS) {
+    console.error("❌ Missing EMAIL_USER or EMAIL_PASS in .env. Email cannot be sent.");
+    return;
+  }
+
+  // Create transporter
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: EMAIL_USER,
+      pass: EMAIL_PASS,
+    },
+    tls: {
+      rejectUnauthorized: false,
+    },
+  });
+
   try {
-    let frontendUrl = (process.env.FRONTEND_URL || "http://localhost:3000").replace(/\/$/, "");
-    const apiEndpoint = `${frontendUrl}/api/send-email`;
-
-    const response = await fetch(apiEndpoint, {
-      method: "POST",
-      headers: { 
-        "Content-Type": "application/json",
-        
-        // ✅ ADDED: Helps email providers identify request properly
+    const info = await transporter.sendMail({
+      from: `"TrackFin" <${EMAIL_USER}>`,
+      to,
+      subject,
+      text: text || "Your verification code is included in this email.",
+      html: html || `<p>${text}</p>`,
+      headers: {
         "X-Mailer": "TrackFin-Mailer",
+        "X-Priority": "1",
+        "Importance": "High",
       },
-      body: JSON.stringify({
-        to,
-        subject,
-        
-        // ✅ IMPROVED: Better plain text version (important for spam filters)
-        text: text || `Your TrackFin verification code is ${html?.match(/\d+/)?.[0] || ""}. This code expires in 10 minutes.`,
-        
-        html: html || `<p>${text}</p>`,
-
-        secret: process.env.EMAIL_API_SECRET,
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-
-        // ✅ ADDED: Email metadata (important for spam reduction)
-        headers: {
-          "X-Priority": "1",
-          "X-MSMail-Priority": "High",
-          "Importance": "High",
-        },
-
-        // ✅ ADDED: Helps inbox placement
-        replyTo: process.env.EMAIL_USER,
-      }),
+      replyTo: EMAIL_USER,
     });
 
-    if (!response.ok) {
-        const errText = await response.text();
-        throw new Error(`Email Gateway Proxy Error: ${errText}`);
-    }
-
-    console.log(`✅ Email relayed successfully via Vercel to ${to}`);
+    console.log(`✅ Email sent successfully to ${to}. Message ID: ${info.messageId}`);
   } catch (err) {
-    console.error(`❌ Vercel Gateway Proxy Failure for ${to}:`, err.message);
-    throw err;
+    console.error(`❌ Direct Email Failure for ${to}:`, err.message);
+    
+    // FALLBACK: Try the Vercel Gateway if direct fails
+    console.log("🔄 Attempting fallback via Vercel Gateway...");
+    try {
+      let frontendUrl = (process.env.FRONTEND_URL || "http://localhost:3000").replace(/\/$/, "");
+      const apiEndpoint = `${frontendUrl}/api/send-email`;
+
+      const response = await fetch(apiEndpoint, {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "X-Mailer": "TrackFin-Mailer",
+        },
+        body: JSON.stringify({
+          to,
+          subject,
+          text: text || "Verification code inside",
+          html: html || `<p>${text}</p>`,
+          secret: process.env.EMAIL_API_SECRET,
+          user: EMAIL_USER,
+          pass: EMAIL_PASS,
+        }),
+      });
+
+      if (!response.ok) {
+        const errText = await response.text();
+        throw new Error(`Gateway Error: ${errText}`);
+      }
+      console.log(`✅ Email relayed successfully via Gateway to ${to}`);
+    } catch (gatewayErr) {
+      console.error(`❌ All email methods failed for ${to}:`, gatewayErr.message);
+      throw gatewayErr;
+    }
   }
 }
 
@@ -56,14 +86,11 @@ async function sendOtpEmail(to, otp, purpose = "signup") {
   console.log("-----------------------------------------\n");
 
   const isReset = purpose === "reset-password";
-
-  // ✅ IMPROVED SUBJECT (LESS SPAMMY)
   const subject = isReset 
     ? "Reset your TrackFin password – OTP inside" 
     : "Verify your TrackFin account – OTP inside";
 
   const headline = isReset ? "Reset Your Password" : "Verify Your Email";
-
   const subtext = isReset
     ? "You requested to reset your TrackFin password. Use the OTP below. It expires in <strong>10 minutes</strong>."
     : "Thanks for signing up! Use the OTP below to verify your account. It expires in <strong>10 minutes</strong>.";

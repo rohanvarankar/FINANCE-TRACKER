@@ -26,10 +26,11 @@ app.use(cookieParser());
 // Serve static files for uploaded avatars
 app.use("/uploads", express.static(path.join(__dirname, "../public/uploads")));
 
-// Allow frontend to call backend
+// Allow frontend to call backend with credentials (for cookies)
 app.use(
   cors({
-    origin: "*",
+    origin: process.env.FRONTEND_URL || "http://localhost:3000",
+    credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   })
 );

@@ -17,15 +17,19 @@ const passwordRegex =
 // ======================================================
 exports.signup = async (req, res) => {
   try {
-    const { username, email, password } = req.body;
-    if (!passwordRegex.test(password)) {
-  return res.status(400).json({
-    message: "Password must be 8+ chars, include uppercase, number & special character",
-  });
-}
+    let { username, email, password } = req.body;
 
     if (!username || !email || !password)
       return res.status(400).json({ message: "All fields are required" });
+
+    // Sanitize
+    email = email.toLowerCase().trim();
+
+    if (!passwordRegex.test(password)) {
+      return res.status(400).json({
+        message: "Password must be 8+ chars, include uppercase, number & special character",
+      });
+    }
 
     // Block if a fully-verified account already exists
     const existingUser = await User.findOne({ email });
@@ -65,10 +69,12 @@ exports.signup = async (req, res) => {
 // ======================================================
 exports.verifyOtp = async (req, res) => {
   try {
-    const { email, otp, purpose } = req.body;
+    let { email, otp, purpose } = req.body;
 
     if (!email || !otp)
       return res.status(400).json({ message: "Email and OTP are required" });
+
+    email = email.toLowerCase().trim();
 
     // ── SIGNUP FLOW ──────────────────────────────────────
     if (!purpose || purpose === "signup") {
@@ -139,6 +145,15 @@ exports.signin = async (req, res) => {
     // Find User
     const user = await User.findOne({ email });
     if (!user) {
+      // Check if they have a pending signup
+      const pending = await PendingSignup.findOne({ email });
+      if (pending) {
+        return res.status(401).json({ 
+          message: "Your account is not verified yet. Please check your email for the verification code.",
+          needsVerification: true,
+          email: pending.email
+        });
+      }
       return res.status(401).json({ message: "Invalid email or password" });
     }
 
@@ -194,10 +209,12 @@ exports.signin = async (req, res) => {
 // ======================================================
 exports.forgotPassword = async (req, res) => {
   try {
-    const { email } = req.body;
+    let { email } = req.body;
 
     if (!email)
       return res.status(400).json({ message: "Email is required" });
+
+    email = email.toLowerCase().trim();
 
     const user = await User.findOne({ email });
     if (!user)
@@ -333,7 +350,11 @@ exports.refreshAccessToken = (req, res) => {
 // 8) LOGOUT
 // ======================================================
 exports.logout = async (req, res) => {
-  res.clearCookie("refreshToken");
+  res.clearCookie("refreshToken", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+  });
   res.json({ message: "Logged out successfully" });
 };
 
